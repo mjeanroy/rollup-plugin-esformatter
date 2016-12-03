@@ -16,7 +16,9 @@
   "author": "Mickael Jeanroy <mickael.jeanroy@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "esformatter": "^0.10.0"
+    "diff": "3.1.0",
+    "esformatter": "0.10.0",
+    "magic-string": "0.17.0"
   },
   "devDependencies": {
     "babel": "6.5.2",

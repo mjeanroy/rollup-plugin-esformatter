@@ -27,22 +27,52 @@ const plugin = require('../dist/index.js');
 
 describe('rollup-plugin-esformatter', () => {
   beforeEach(() => {
-    spyOn(esformatter, 'format').and.callThrough();
+    spyOn(console, 'log');
   });
 
-  it('should run esformatter', () => {
+  it('should run esformatter with source map', () => {
     const instance = plugin();
+
+    instance.options({
+      sourceMap: true,
+    });
+
     const code = 'var foo=0;var test="hello world";';
     const result = instance.transformBundle(code);
 
-    expect(esformatter.format).toHaveBeenCalledWith(code);
-    expect(result).toBe(
+    expect(console.log).toHaveBeenCalledWith(
+      '[rollup-plugin-esformatter] Source-map is enabled, computing diff is required'
+    );
+
+    expect(console.log).toHaveBeenCalledWith(
+      '[rollup-plugin-esformatter] This may take a moment (depends on the size of your bundle)'
+    );
+
+    expect(result.map).toBeDefined();
+    expect(result.code).toBe(
       'var foo = 0;\n' +
       'var test = "hello world";'
     );
   });
 
-  fit('should run esformatter with options', () => {
+  it('should run esformatter without source map', () => {
+    const instance = plugin();
+
+    // Run the option.
+    instance.options();
+
+    const code = 'var foo=0;var test="hello world";';
+    const result = instance.transformBundle(code);
+
+    expect(console.log).not.toHaveBeenCalled();
+    expect(result.map).not.toBeDefined();
+    expect(result.code).toBe(
+      'var foo = 0;\n' +
+      'var test = "hello world";'
+    );
+  });
+
+  it('should run esformatter with options', () => {
     const options = {
       indent : {
         value : '  ',
@@ -50,11 +80,62 @@ describe('rollup-plugin-esformatter', () => {
     };
 
     const instance = plugin(options);
+
+    instance.options({
+      sourceMap: true,
+    });
+
     const code = 'var foo=0;var test="hello world";';
     const result = instance.transformBundle(code);
 
-    expect(esformatter.format).toHaveBeenCalledWith(code, options);
-    expect(result).toBe(
+    expect(result.map).toBeDefined();
+    expect(result.code).toBe(
+      'var foo = 0;\n' +
+      'var test = "hello world";'
+    );
+  });
+
+  it('should remove unnecessary spaces', () => {
+    const options = {
+      indent : {
+        value : '  ',
+      },
+    };
+
+    const instance = plugin(options);
+
+    instance.options({
+      sourceMap: true,
+    });
+
+    const code = 'var foo    =    0;\nvar test = "hello world";';
+    const result = instance.transformBundle(code);
+
+    expect(result.map).toBeDefined();
+    expect(result.code).toBe(
+      'var foo = 0;\n' +
+      'var test = "hello world";'
+    );
+  });
+
+  it('should add and remove characters', () => {
+    const options = {
+      indent : {
+        value : '  ',
+      },
+    };
+
+    const instance = plugin(options);
+
+    instance.options({
+      sourceMap: true,
+    });
+
+    const code = 'var foo    =    0;var test = "hello world";';
+    const result = instance.transformBundle(code);
+
+    expect(result.map).toBeDefined();
+    expect(result.code).toBe(
       'var foo = 0;\n' +
       'var test = "hello world";'
     );

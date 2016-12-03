@@ -22,12 +22,65 @@
  * SOFTWARE.
  */
 
+const _ = require('lodash');
+const MagicString = require('magic-string');
+const diff = require('diff');
 const esformatter = require('esformatter');
 
 module.exports = (options) => {
+  let sourceMap;
+
   return {
+    /**
+     * Function called by `rollup` that is used to read the `sourceMap` setting.
+     *
+     * @param {Object} opts Rollup options.
+     * @return {void}
+     */
+    options(opts) {
+      sourceMap = !!opts && !!opts.sourceMap;
+    },
+
+    /**
+     * Function called by `rollup` before generating final bundle.
+     *
+     * @param {string} source Souce code of the final bundle.
+     * @return {Object} The result containing a `code` property and, if source map is enabled,
+     *                  a `map` property.
+     */
     transformBundle(source) {
-      return esformatter.format(source, options);
+      const output = esformatter.format(source, options);
+
+      // No need to do more.
+      if (!sourceMap) {
+        return {code: output};
+      }
+
+      console.log('[rollup-plugin-esformatter] Source-map is enabled, computing diff is required');
+      console.log('[rollup-plugin-esformatter] This may take a moment (depends on the size of your bundle)');
+
+      const magicString = new MagicString(source);
+      const changes = diff.diffChars(source, output);
+
+      let idx = 0;
+
+      _.forEach(changes, (part) => {
+        if (part.added) {
+          magicString.prependLeft(idx, part.value);
+          idx -= part.count;
+        } else if (part.removed) {
+          magicString.remove(idx, idx + part.count);
+        }
+
+        idx += part.count;
+      });
+
+      return {
+        code: magicString.toString(),
+        map: magicString.generateMap({
+          hires: true,
+        }),
+      };
     },
   };
 };
