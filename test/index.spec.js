@@ -22,7 +22,6 @@
  * SOFTWARE.
  */
 
-const esformatter = require('esformatter');
 const plugin = require('../dist/index.js');
 
 describe('rollup-plugin-esformatter', () => {
@@ -74,8 +73,8 @@ describe('rollup-plugin-esformatter', () => {
 
   it('should run esformatter with options', () => {
     const options = {
-      indent : {
-        value : '  ',
+      indent: {
+        value: '  ',
       },
     };
 
@@ -97,8 +96,8 @@ describe('rollup-plugin-esformatter', () => {
 
   it('should remove unnecessary spaces', () => {
     const options = {
-      indent : {
-        value : '  ',
+      indent: {
+        value: '  ',
       },
     };
 
@@ -120,8 +119,8 @@ describe('rollup-plugin-esformatter', () => {
 
   it('should add and remove characters', () => {
     const options = {
-      indent : {
-        value : '  ',
+      indent: {
+        value: '  ',
       },
     };
 

@@ -27,6 +27,7 @@ const gulp = require('gulp');
 const jasmine = require('gulp-jasmine');
 const babel = require('gulp-babel');
 const del = require('del');
+const eslint = require('gulp-eslint');
 
 const root = path.join(__dirname);
 const config = {
@@ -45,11 +46,21 @@ gulp.task('test', ['build'], () => {
     .pipe(jasmine());
 });
 
+gulp.task('lint', () => {
+  const srcFiles = path.join(config.src, '**', '*.js');
+  const testFiles = path.join(config.test, '**', '*.js');
+  return gulp
+    .src([srcFiles, testFiles])
+    .pipe(eslint())
+    .pipe(eslint.format())
+    .pipe(eslint.failAfterError());
+});
+
 gulp.task('clean', () => {
   return del([config.dist]);
 });
 
-gulp.task('build', ['clean'], () => {
+gulp.task('build', ['lint', 'clean'], () => {
   return gulp
     .src(path.join(config.src, '*.js'))
     .pipe(babel())
