@@ -22,6 +22,8 @@
  * SOFTWARE.
  */
 
+'use strict';
+
 const _ = require('lodash');
 const MagicString = require('magic-string');
 const diff = require('diff');

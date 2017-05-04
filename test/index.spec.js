@@ -22,6 +22,8 @@
  * SOFTWARE.
  */
 
+'use strict';
+
 const plugin = require('../dist/index.js');
 
 describe('rollup-plugin-esformatter', () => {
