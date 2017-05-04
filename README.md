@@ -1,19 +1,22 @@
 # rollup-plugin-esformatter
 
+[![Build Status](https://travis-ci.org/mjeanroy/rollup-plugin-esformatter.svg?branch=master)](https://travis-ci.org/mjeanroy/rollup-plugin-esformatter)
+[![Npm version](https://badge.fury.io/js/rollup-plugin-esformatter.svg)](https://badge.fury.io/js/rollup-plugin-esformatter)
+
 Rollup plugin that can be used to run [esformatter](http://npmjs.com/package/esformatter) on the final bundle.
 
 ## How to use
 
 Install the plugin with NPM:
 
-```npm install --save-dev rollup-plugin-esformatter```
+`npm install --save-dev rollup-plugin-esformatter`
 
 Then add it to your rollup configuration:
 
-```javascript
 const path = require('path');
 const esformatter = require('rollup-plugin-esformatter');
 
+```javascript
 module.exports = {
   entry: path.join(__dirname, 'src', 'index.js'),
   dest: path.join(__dirname, 'dist', 'bundle.js'),
@@ -21,11 +24,11 @@ module.exports = {
     // Run plugin with esformatter options.
     esformatter({
       indent: {
-        value: '  '
-      }
-    })
-  ]
-}
+        value: '  ',
+      },
+    }),
+  ],
+};
 ```
 
 ## Source Maps
@@ -45,10 +48,17 @@ module.exports = {
   sourceMap: true,
   plugins: [
     // Run plugin with esformatter options.
-    esformatter()
-  ]
-}
+    esformatter(),
+  ],
+};
 ```
+
+## ChangeLogs
+
+- 0.2.0
+  - Dependency updates.
+  - Ignore unnecessary files in npm package
+- 0.1.0 Initial release
 
 ## License
 
