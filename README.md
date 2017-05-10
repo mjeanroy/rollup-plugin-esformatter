@@ -56,6 +56,8 @@ module.exports = {
 
 ## ChangeLogs
 
+- 0.3.0
+  - Dependency updates (`magic-string`).
 - 0.2.0
   - Dependency updates.
   - Ignore unnecessary files in npm package
