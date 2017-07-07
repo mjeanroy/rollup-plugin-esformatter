@@ -28,7 +28,7 @@
     "diff": "3.3.0",
     "esformatter": "^0.10.0",
     "lodash": "4.17.4",
-    "magic-string": "0.21.3"
+    "magic-string": "0.22.0"
   },
   "devDependencies": {
     "babel-core": "6.25.0",
