@@ -42,7 +42,7 @@ describe('rollup-plugin-esformatter', () => {
     const result = instance.transformBundle(code);
 
     expect(console.log).toHaveBeenCalledWith(
-      '[rollup-plugin-esformatter] Source-map is enabled, computing diff is required'
+      '[rollup-plugin-esformatter] Sourcemap is enabled, computing diff is required'
     );
 
     expect(console.log).toHaveBeenCalledWith(

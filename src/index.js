@@ -57,7 +57,7 @@ module.exports = (options) => {
         return {code: output};
       }
 
-      console.log('[rollup-plugin-esformatter] Source-map is enabled, computing diff is required');
+      console.log('[rollup-plugin-esformatter] Sourcemap is enabled, computing diff is required');
       console.log('[rollup-plugin-esformatter] This may take a moment (depends on the size of your bundle)');
 
       const magicString = new MagicString(source);
