@@ -24,7 +24,6 @@
 
 'use strict';
 
-const _ = require('lodash');
 const MagicString = require('magic-string');
 const diff = require('diff');
 const esformatter = require('esformatter');
@@ -66,16 +65,18 @@ module.exports = (options) => {
 
       let idx = 0;
 
-      _.forEach(changes, (part) => {
-        if (part.added) {
-          magicString.prependLeft(idx, part.value);
-          idx -= part.count;
-        } else if (part.removed) {
-          magicString.remove(idx, idx + part.count);
-        }
+      if (changes && changes.length > 0) {
+        changes.forEach((part) => {
+          if (part.added) {
+            magicString.prependLeft(idx, part.value);
+            idx -= part.count;
+          } else if (part.removed) {
+            magicString.remove(idx, idx + part.count);
+          }
 
-        idx += part.count;
-      });
+          idx += part.count;
+        });
+      }
 
       return {
         code: magicString.toString(),
