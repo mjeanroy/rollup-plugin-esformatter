@@ -29,7 +29,19 @@ const diff = require('diff');
 const esformatter = require('esformatter');
 
 module.exports = (options) => {
-  let sourceMap;
+  let sourcemap;
+
+  if (options && hasSourceMap(options)) {
+    sourcemap = isSourceMapEnabled(options);
+
+    // Delete custom option.
+    deleteSourceMap(options);
+
+    // Do not send an empty option object.
+    if (Object.keys(options).length === 0) {
+      options = undefined;
+    }
+  }
 
   return {
     /**
@@ -38,22 +50,34 @@ module.exports = (options) => {
      * @param {Object} opts Rollup options.
      * @return {void}
      */
-    options(opts) {
-      sourceMap = !!opts && !!opts.sourceMap;
+    options(opts = {}) {
+      if (sourcemap == null) {
+        // Get the global `sourcemap` option on given object.
+        // Should support:
+        //  - `sourcemap` (lowercase) option which is the name with rollup >= 0.48.0,
+        //  - `sourceMap` (camelcase) option which is the (deprecated) name with rollup < 0.48.0.
+        const globalSourcemap = isSourceMapEnabled(opts);
+
+        // Since rollup 0.48, sourcemap option can be set on the `output` object.
+        const output = opts.output || {};
+        const outputSourceMap = Array.isArray(output) ? output.some(isSourceMapEnabled) : isSourceMapEnabled(output);
+
+        // Enable or disable `sourcemap` generation.
+        sourcemap = globalSourcemap || outputSourceMap;
+      }
     },
 
     /**
      * Function called by `rollup` before generating final bundle.
      *
      * @param {string} source Souce code of the final bundle.
-     * @return {Object} The result containing a `code` property and, if source map is enabled,
-     *                  a `map` property.
+     * @return {Object} The result containing a `code` property and, if source map is enabled, a `map` property.
      */
     transformBundle(source) {
       const output = esformatter.format(source, options);
 
       // No need to do more.
-      if (!sourceMap) {
+      if (!sourcemap) {
         return {code: output};
       }
 
@@ -87,3 +111,48 @@ module.exports = (options) => {
     },
   };
 };
+
+const SOURCE_MAPS_OPTS = [
+  'sourcemap', // Name of the property with rollup >= 0.48.
+  'sourceMap', // Name of the property with rollup < 0.48.
+];
+
+/**
+ * Check if property exist on an object.
+ *
+ * @param {Object} o The object.
+ * @param {string} prop The property name.
+ * @return {boolean} `true` if property is defined on object, `false` otherwise.
+ */
+function has(o, prop) {
+  return prop in o;
+}
+
+/**
+ * Check if `sourcemap` option is defined on option object.
+ *
+ * @param {Object} opts Options.
+ * @return {boolean} `true` if sourcemap is defined, `false` otherwise.
+ */
+function hasSourceMap(opts) {
+  return SOURCE_MAPS_OPTS.some((p) => has(opts, p));
+}
+
+/**
+ * Check if `sourcemap` option is enable or not.
+ *
+ * @param {Object} opts Options.
+ * @return {boolean} `true` if sourcemap is enabled, `false` otherwise.
+ */
+function isSourceMapEnabled(opts) {
+  return !!(SOURCE_MAPS_OPTS.find((p) => opts[p]));
+}
+
+/**
+ * Delete sourcemap option on object.
+ *
+ * @param {Object} opts The object.
+ */
+function deleteSourceMap(opts) {
+  SOURCE_MAPS_OPTS.forEach((p) => delete opts[p]);
+}

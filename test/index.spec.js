@@ -28,7 +28,7 @@ const plugin = require('../dist/index.js');
 
 describe('rollup-plugin-esformatter', () => {
   beforeEach(() => {
-    spyOn(console, 'log');
+    spyOn(console, 'log').and.callThrough();
   });
 
   it('should run esformatter with source map', () => {
@@ -37,6 +37,8 @@ describe('rollup-plugin-esformatter', () => {
     instance.options({
       sourceMap: true,
     });
+
+    console.log.and.stub();
 
     const code = 'var foo=0;var test="hello world";';
     const result = instance.transformBundle(code);
@@ -73,7 +75,7 @@ describe('rollup-plugin-esformatter', () => {
     );
   });
 
-  it('should run esformatter with options', () => {
+  it('should run esformatter with sourceMap (camelcase) options', () => {
     const options = {
       indent: {
         value: '  ',
@@ -85,6 +87,131 @@ describe('rollup-plugin-esformatter', () => {
     instance.options({
       sourceMap: true,
     });
+
+    console.log.and.stub();
+
+    const code = 'var foo=0;var test="hello world";';
+    const result = instance.transformBundle(code);
+
+    expect(result.map).toBeDefined();
+    expect(result.code).toBe(
+      'var foo = 0;\n' +
+      'var test = "hello world";'
+    );
+  });
+
+  it('should run esformatter with sourcemap (lowercase) options', () => {
+    const options = {
+      indent: {
+        value: '  ',
+      },
+    };
+
+    const instance = plugin(options);
+
+    instance.options({
+      sourcemap: true,
+    });
+
+    console.log.and.stub();
+
+    const code = 'var foo=0;var test="hello world";';
+    const result = instance.transformBundle(code);
+
+    expect(result.map).toBeDefined();
+    expect(result.code).toBe(
+      'var foo = 0;\n' +
+      'var test = "hello world";'
+    );
+  });
+
+  it('should run esformatter with sourcemap in output options', () => {
+    const options = {
+      indent: {
+        value: '  ',
+      },
+    };
+
+    const instance = plugin(options);
+
+    instance.options({
+      output: {
+        sourcemap: true,
+      },
+    });
+
+    console.log.and.stub();
+
+    const code = 'var foo=0;var test="hello world";';
+    const result = instance.transformBundle(code);
+
+    expect(result.map).toBeDefined();
+    expect(result.code).toBe(
+      'var foo = 0;\n' +
+      'var test = "hello world";'
+    );
+  });
+
+  it('should run esformatter with sourcemap in output array', () => {
+    const options = {
+      indent: {
+        value: '  ',
+      },
+    };
+
+    const instance = plugin(options);
+
+    instance.options({
+      output: [{
+        sourcemap: true,
+      }],
+    });
+
+    console.log.and.stub();
+
+    const code = 'var foo=0;var test="hello world";';
+    const result = instance.transformBundle(code);
+
+    expect(result.map).toBeDefined();
+    expect(result.code).toBe(
+      'var foo = 0;\n' +
+      'var test = "hello world";'
+    );
+  });
+
+  it('should run esformatter with sourcemap (lowercase) in plugin option', () => {
+    const options = {
+      sourcemap: true,
+      indent: {
+        value: '  ',
+      },
+    };
+
+    const instance = plugin(options);
+
+    console.log.and.stub();
+
+    const code = 'var foo=0;var test="hello world";';
+    const result = instance.transformBundle(code);
+
+    expect(result.map).toBeDefined();
+    expect(result.code).toBe(
+      'var foo = 0;\n' +
+      'var test = "hello world";'
+    );
+  });
+
+  it('should run esformatter with sourcemap (camelcase) in plugin option', () => {
+    const options = {
+      sourceMap: true,
+      indent: {
+        value: '  ',
+      },
+    };
+
+    const instance = plugin(options);
+
+    console.log.and.stub();
 
     const code = 'var foo=0;var test="hello world";';
     const result = instance.transformBundle(code);
@@ -106,8 +233,10 @@ describe('rollup-plugin-esformatter', () => {
     const instance = plugin(options);
 
     instance.options({
-      sourceMap: true,
+      sourcemap: true,
     });
+
+    console.log.and.stub();
 
     const code = 'var foo    =    0;\nvar test = "hello world";';
     const result = instance.transformBundle(code);
@@ -129,8 +258,10 @@ describe('rollup-plugin-esformatter', () => {
     const instance = plugin(options);
 
     instance.options({
-      sourceMap: true,
+      sourcemap: true,
     });
+
+    console.log.and.stub();
 
     const code = 'var foo    =    0;var test = "hello world";';
     const result = instance.transformBundle(code);
