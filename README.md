@@ -19,8 +19,12 @@ const esformatter = require('rollup-plugin-esformatter');
 
 ```javascript
 module.exports = {
-  entry: path.join(__dirname, 'src', 'index.js'),
-  dest: path.join(__dirname, 'dist', 'bundle.js'),
+  input: path.join(__dirname, 'src', 'index.js'),
+
+  output: {
+    file: path.join(__dirname, 'dist', 'bundle.js'),
+  },
+
   plugins: [
     // Run plugin with esformatter options.
     esformatter({
@@ -34,8 +38,9 @@ module.exports = {
 
 ## Source Maps
 
-If source map is enabled in the global rollup options, then a source map will be generated on the formatted bundle.
-Note that this may take some time since `esformatter` package is not able to generate a sourcemap : this plugin must compute the diff between the original bundle and the formatted result and generate the corresponding source map.
+If source map is enabled in the global rollup options, then a source map will be generated on the formatted bundle (except if sourcemap are explicitely disabled in the esformatter plugin options).
+
+Note that this may take some time since `esformatter` package is not able to generate a sourcemap and this plugin must compute the diff between the original bundle and the formatted result and generate the corresponding sourcemap: for this reason, sourcemap are disabled by default.
 
 Here is an example:
 
@@ -44,18 +49,29 @@ const path = require('path');
 const esformatter = require('rollup-plugin-esformatter');
 
 module.exports = {
-  entry: path.join(__dirname, 'src', 'index.js'),
-  dest: path.join(__dirname, 'dist', 'bundle.js'),
-  sourceMap: true,
+  input: path.join(__dirname, 'src', 'index.js'),
+
+  output: {
+    path.join(__dirname, 'dist', 'bundle.js'),
+    sourcemap: true,
+  },
+
   plugins: [
     // Run plugin with esformatter options.
-    esformatter(),
+    esformatter({
+      sourceMap: true, // Can also be disabled/enabled here.
+    }),
   ],
 };
 ```
 
 ## ChangeLogs
 
+- 0.4.0
+  - Various dependency updates.
+  - Support new sourcemap (lowercase) option of rollup.
+  - Sourcemap can now be activated/disabled in the plugin options.
+  - Expose plugin name.
 - 0.3.0
   - Dependency updates (`magic-string`).
 - 0.2.0
