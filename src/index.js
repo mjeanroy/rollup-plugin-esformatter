@@ -28,6 +28,8 @@ const MagicString = require('magic-string');
 const diff = require('diff');
 const esformatter = require('esformatter');
 
+const NAME = 'rollup-plugin-esformatter';
+
 module.exports = (options) => {
   let sourcemap;
 
@@ -44,6 +46,12 @@ module.exports = (options) => {
   }
 
   return {
+    /**
+     * The plugin name.
+     * @type {string}
+     */
+    name: NAME,
+
     /**
      * Function called by `rollup` that is used to read the `sourceMap` setting.
      *
@@ -81,8 +89,8 @@ module.exports = (options) => {
         return {code: output};
       }
 
-      console.log('[rollup-plugin-esformatter] Sourcemap is enabled, computing diff is required');
-      console.log('[rollup-plugin-esformatter] This may take a moment (depends on the size of your bundle)');
+      console.log(`[${NAME}] Sourcemap is enabled, computing diff is required`);
+      console.log(`[${NAME}] This may take a moment (depends on the size of your bundle)`);
 
       const magicString = new MagicString(source);
       const changes = diff.diffChars(source, output);

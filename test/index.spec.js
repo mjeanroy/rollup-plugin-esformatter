@@ -31,6 +31,11 @@ describe('rollup-plugin-esformatter', () => {
     spyOn(console, 'log').and.callThrough();
   });
 
+  it('should have a name', () => {
+    const instance = plugin();
+    expect(instance.name).toBe('rollup-plugin-esformatter');
+  });
+
   it('should run esformatter with source map', () => {
     const instance = plugin();
 
