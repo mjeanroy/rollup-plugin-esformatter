@@ -29,7 +29,7 @@ const jasmine = require('gulp-jasmine');
 const babel = require('gulp-babel');
 const del = require('del');
 const eslint = require('gulp-eslint');
-const gutil = require('gulp-util');
+const log = require('fancy-log');
 const git = require('gulp-git');
 const bump = require('gulp-bump');
 const runSequence = require('run-sequence');
@@ -97,7 +97,7 @@ gulp.task('tag', (done) => {
   gulp.task(`bump:${level}`, () => {
     return gulp.src(path.join(__dirname, 'package.json'))
       .pipe(bump({type: level})
-      .on('error', gutil.log))
+      .on('error', (e) => log.error(e)))
       .pipe(gulp.dest(__dirname));
   });
 
