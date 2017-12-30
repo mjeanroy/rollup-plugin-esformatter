@@ -32,16 +32,17 @@ const NAME = 'rollup-plugin-esformatter';
 
 module.exports = (options) => {
   let sourcemap;
+  let newOptions = options;
 
   if (options && hasSourceMap(options)) {
     sourcemap = isSourceMapEnabled(options);
 
     // Delete custom option.
-    deleteSourceMap(options);
+    newOptions = deleteSourceMap(options);
 
     // Do not send an empty option object.
-    if (Object.keys(options).length === 0) {
-      options = undefined;
+    if (Object.keys(newOptions).length === 0) {
+      newOptions = undefined;
     }
   }
 
@@ -83,7 +84,7 @@ module.exports = (options) => {
      * @return {Object} The result containing a `code` property and, if source map is enabled, a `map` property.
      */
     transformBundle(source, outputOptions) {
-      const output = esformatter.format(source, options);
+      const output = esformatter.format(source, newOptions);
       const outputOptionsSourcemap = isNil(outputOptions) ? null : isSourceMapEnabled(outputOptions);
 
       // No need to do more.
@@ -162,9 +163,18 @@ function isSourceMapEnabled(opts) {
  * Delete sourcemap option on object.
  *
  * @param {Object} opts The object.
+ * @return {Object} Option object without `sourcemap` entry.
  */
 function deleteSourceMap(opts) {
-  SOURCE_MAPS_OPTS.forEach((p) => delete opts[p]);
+  const newOptions = {};
+
+  Object.keys(opts).forEach((k) => {
+    if (SOURCE_MAPS_OPTS.indexOf(k) < 0) {
+      newOptions[k] = opts[k];
+    }
+  });
+
+  return newOptions;
 }
 
 /**

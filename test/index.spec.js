@@ -24,6 +24,7 @@
 
 'use strict';
 
+const esformatter = require('esformatter');
 const plugin = require('../dist/index.js');
 
 describe('rollup-plugin-esformatter', () => {
@@ -353,5 +354,61 @@ describe('rollup-plugin-esformatter', () => {
       'var foo = 0;\n' +
       'var test = "hello world";'
     );
+  });
+
+  it('should avoid side effect and do not modify plugin options', () => {
+    const options = {
+      sourceMap: false,
+    };
+
+    const instance = plugin(options);
+    instance.options({});
+    instance.transformBundle('var foo = 0;');
+
+    // It should not have been touched.
+    expect(options).toEqual({
+      sourceMap: false,
+    });
+  });
+
+  it('should run esformatter without sourcemap options', () => {
+    const options = {
+      sourceMap: false,
+    };
+
+    spyOn(esformatter, 'format').and.callThrough();
+
+    const code = 'var foo = 0;';
+    const instance = plugin(options);
+    instance.options({});
+    instance.transformBundle(code);
+
+    expect(esformatter.format).toHaveBeenCalledWith(code, undefined);
+    expect(options).toEqual({
+      sourceMap: false,
+    });
+  });
+
+  it('should run esformatter without sourcemap options and custom other options', () => {
+    const options = {
+      sourceMap: false,
+      singleQuote: true,
+    };
+
+    spyOn(esformatter, 'format').and.callThrough();
+
+    const code = 'var foo = 0;';
+    const instance = plugin(options);
+    instance.options({});
+    instance.transformBundle(code);
+
+    expect(esformatter.format).toHaveBeenCalledWith(code, {
+      singleQuote: true,
+    });
+
+    expect(options).toEqual({
+      sourceMap: false,
+      singleQuote: true,
+    });
   });
 });
