@@ -59,7 +59,7 @@ module.exports = (options) => {
      * @return {void}
      */
     options(opts = {}) {
-      if (sourcemap == null) {
+      if (isNil(sourcemap)) {
         // Get the global `sourcemap` option on given object.
         // Should support:
         //  - `sourcemap` (lowercase) option which is the name with rollup >= 0.48.0,
@@ -79,13 +79,15 @@ module.exports = (options) => {
      * Function called by `rollup` before generating final bundle.
      *
      * @param {string} source Souce code of the final bundle.
+     * @param {Object} outputOptions Output option.
      * @return {Object} The result containing a `code` property and, if source map is enabled, a `map` property.
      */
-    transformBundle(source) {
+    transformBundle(source, outputOptions) {
       const output = esformatter.format(source, options);
+      const outputOptionsSourcemap = isNil(outputOptions) ? null : isSourceMapEnabled(outputOptions);
 
       // No need to do more.
-      if (!sourcemap) {
+      if (!sourcemap && !outputOptionsSourcemap) {
         return {code: output};
       }
 
@@ -163,4 +165,14 @@ function isSourceMapEnabled(opts) {
  */
 function deleteSourceMap(opts) {
   SOURCE_MAPS_OPTS.forEach((p) => delete opts[p]);
+}
+
+/**
+ * Check if value is `null` or `undefined`.
+ *
+ * @param {*} value Value to check.
+ * @return {boolean} `true` if `value` is `null` or `undefined`, `false` otherwise.
+ */
+function isNil(value) {
+  return value == null;
 }

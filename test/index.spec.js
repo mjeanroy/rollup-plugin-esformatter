@@ -105,6 +105,83 @@ describe('rollup-plugin-esformatter', () => {
     );
   });
 
+  it('should run esformatter with sourcemap in output options', () => {
+    const instance = plugin();
+
+    // The input options may not contain `sourcemap` entry with rollup >= 0.53.
+    instance.options({});
+
+    console.log.and.stub();
+
+    const code = 'var foo=0;var test="hello world";';
+    const result = instance.transformBundle(code, {
+      sourcemap: true,
+    });
+
+    expect(console.log).toHaveBeenCalledWith(
+      '[rollup-plugin-esformatter] Sourcemap is enabled, computing diff is required'
+    );
+
+    expect(console.log).toHaveBeenCalledWith(
+      '[rollup-plugin-esformatter] This may take a moment (depends on the size of your bundle)'
+    );
+
+    expect(result.map).toBeDefined();
+    expect(result.code).toBe(
+      'var foo = 0;\n' +
+      'var test = "hello world";'
+    );
+  });
+
+  it('should run prettier with sourcemap in output options (camelcase format)', () => {
+    const instance = plugin();
+
+    // The input options may not contain `sourcemap` entry with rollup >= 0.53.
+    instance.options({});
+
+    console.log.and.stub();
+
+    const code = 'var foo=0;var test="hello world";';
+    const result = instance.transformBundle(code, {
+      sourceMap: true,
+    });
+
+    expect(console.log).toHaveBeenCalledWith(
+      '[rollup-plugin-esformatter] Sourcemap is enabled, computing diff is required'
+    );
+
+    expect(console.log).toHaveBeenCalledWith(
+      '[rollup-plugin-esformatter] This may take a moment (depends on the size of your bundle)'
+    );
+
+    expect(result.map).toBeDefined();
+    expect(result.code).toBe(
+      'var foo = 0;\n' +
+      'var test = "hello world";'
+    );
+  });
+
+  it('should run prettier with sourcemap disabled in output options', () => {
+    const instance = plugin();
+
+    // The input options may not contain `sourcemap` entry with rollup >= 0.53.
+    instance.options({});
+
+    console.log.and.stub();
+
+    const code = 'var foo=0;var test="hello world";';
+    const result = instance.transformBundle(code, {
+      sourcemap: false,
+    });
+
+    expect(console.log).not.toHaveBeenCalled();
+    expect(result.map).not.toBeDefined();
+    expect(result.code).toBe(
+      'var foo = 0;\n' +
+      'var test = "hello world";'
+    );
+  });
+
   it('should run esformatter with sourcemap (lowercase) options', () => {
     const options = {
       indent: {
