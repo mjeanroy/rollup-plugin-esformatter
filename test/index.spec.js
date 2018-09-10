@@ -50,17 +50,17 @@ describe('rollup-plugin-esformatter', () => {
     const result = instance.transformBundle(code);
 
     expect(console.log).toHaveBeenCalledWith(
-      '[rollup-plugin-esformatter] Sourcemap is enabled, computing diff is required'
+        '[rollup-plugin-esformatter] Sourcemap is enabled, computing diff is required'
     );
 
     expect(console.log).toHaveBeenCalledWith(
-      '[rollup-plugin-esformatter] This may take a moment (depends on the size of your bundle)'
+        '[rollup-plugin-esformatter] This may take a moment (depends on the size of your bundle)'
     );
 
     expect(result.map).toBeDefined();
     expect(result.code).toBe(
-      'var foo = 0;\n' +
-      'var test = "hello world";'
+        'var foo = 0;\n' +
+        'var test = "hello world";'
     );
   });
 
@@ -76,8 +76,8 @@ describe('rollup-plugin-esformatter', () => {
     expect(console.log).not.toHaveBeenCalled();
     expect(result.map).not.toBeDefined();
     expect(result.code).toBe(
-      'var foo = 0;\n' +
-      'var test = "hello world";'
+        'var foo = 0;\n' +
+        'var test = "hello world";'
     );
   });
 
@@ -101,8 +101,8 @@ describe('rollup-plugin-esformatter', () => {
 
     expect(result.map).toBeDefined();
     expect(result.code).toBe(
-      'var foo = 0;\n' +
-      'var test = "hello world";'
+        'var foo = 0;\n' +
+        'var test = "hello world";'
     );
   });
 
@@ -120,17 +120,17 @@ describe('rollup-plugin-esformatter', () => {
     });
 
     expect(console.log).toHaveBeenCalledWith(
-      '[rollup-plugin-esformatter] Sourcemap is enabled, computing diff is required'
+        '[rollup-plugin-esformatter] Sourcemap is enabled, computing diff is required'
     );
 
     expect(console.log).toHaveBeenCalledWith(
-      '[rollup-plugin-esformatter] This may take a moment (depends on the size of your bundle)'
+        '[rollup-plugin-esformatter] This may take a moment (depends on the size of your bundle)'
     );
 
     expect(result.map).toBeDefined();
     expect(result.code).toBe(
-      'var foo = 0;\n' +
-      'var test = "hello world";'
+        'var foo = 0;\n' +
+        'var test = "hello world";'
     );
   });
 
@@ -148,17 +148,17 @@ describe('rollup-plugin-esformatter', () => {
     });
 
     expect(console.log).toHaveBeenCalledWith(
-      '[rollup-plugin-esformatter] Sourcemap is enabled, computing diff is required'
+        '[rollup-plugin-esformatter] Sourcemap is enabled, computing diff is required'
     );
 
     expect(console.log).toHaveBeenCalledWith(
-      '[rollup-plugin-esformatter] This may take a moment (depends on the size of your bundle)'
+        '[rollup-plugin-esformatter] This may take a moment (depends on the size of your bundle)'
     );
 
     expect(result.map).toBeDefined();
     expect(result.code).toBe(
-      'var foo = 0;\n' +
-      'var test = "hello world";'
+        'var foo = 0;\n' +
+        'var test = "hello world";'
     );
   });
 
@@ -178,8 +178,8 @@ describe('rollup-plugin-esformatter', () => {
     expect(console.log).not.toHaveBeenCalled();
     expect(result.map).not.toBeDefined();
     expect(result.code).toBe(
-      'var foo = 0;\n' +
-      'var test = "hello world";'
+        'var foo = 0;\n' +
+        'var test = "hello world";'
     );
   });
 
@@ -203,8 +203,8 @@ describe('rollup-plugin-esformatter', () => {
 
     expect(result.map).toBeDefined();
     expect(result.code).toBe(
-      'var foo = 0;\n' +
-      'var test = "hello world";'
+        'var foo = 0;\n' +
+        'var test = "hello world";'
     );
   });
 
@@ -230,8 +230,8 @@ describe('rollup-plugin-esformatter', () => {
 
     expect(result.map).toBeDefined();
     expect(result.code).toBe(
-      'var foo = 0;\n' +
-      'var test = "hello world";'
+        'var foo = 0;\n' +
+        'var test = "hello world";'
     );
   });
 
@@ -257,8 +257,8 @@ describe('rollup-plugin-esformatter', () => {
 
     expect(result.map).toBeDefined();
     expect(result.code).toBe(
-      'var foo = 0;\n' +
-      'var test = "hello world";'
+        'var foo = 0;\n' +
+        'var test = "hello world";'
     );
   });
 
@@ -279,8 +279,8 @@ describe('rollup-plugin-esformatter', () => {
 
     expect(result.map).toBeDefined();
     expect(result.code).toBe(
-      'var foo = 0;\n' +
-      'var test = "hello world";'
+        'var foo = 0;\n' +
+        'var test = "hello world";'
     );
   });
 
@@ -301,8 +301,8 @@ describe('rollup-plugin-esformatter', () => {
 
     expect(result.map).toBeDefined();
     expect(result.code).toBe(
-      'var foo = 0;\n' +
-      'var test = "hello world";'
+        'var foo = 0;\n' +
+        'var test = "hello world";'
     );
   });
 
@@ -326,8 +326,8 @@ describe('rollup-plugin-esformatter', () => {
 
     expect(result.map).toBeDefined();
     expect(result.code).toBe(
-      'var foo = 0;\n' +
-      'var test = "hello world";'
+        'var foo = 0;\n' +
+        'var test = "hello world";'
     );
   });
 
@@ -351,8 +351,8 @@ describe('rollup-plugin-esformatter', () => {
 
     expect(result.map).toBeDefined();
     expect(result.code).toBe(
-      'var foo = 0;\n' +
-      'var test = "hello world";'
+        'var foo = 0;\n' +
+        'var test = "hello world";'
     );
   });
 

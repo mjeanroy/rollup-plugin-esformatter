@@ -47,18 +47,18 @@ gulp.task('test', ['build'], () => {
   ];
 
   return gulp
-    .src(src)
-    .pipe(jasmine());
+      .src(src)
+      .pipe(jasmine());
 });
 
 gulp.task('lint', () => {
   const srcFiles = path.join(config.src, '**', '*.js');
   const testFiles = path.join(config.test, '**', '*.js');
   return gulp
-    .src([srcFiles, testFiles])
-    .pipe(eslint())
-    .pipe(eslint.format())
-    .pipe(eslint.failAfterError());
+      .src([srcFiles, testFiles])
+      .pipe(eslint())
+      .pipe(eslint.format())
+      .pipe(eslint.failAfterError());
 });
 
 gulp.task('clean', () => {
@@ -67,24 +67,24 @@ gulp.task('clean', () => {
 
 gulp.task('build', ['lint', 'clean'], () => {
   return gulp
-    .src(path.join(config.src, '*.js'))
-    .pipe(babel())
-    .pipe(gulp.dest(path.join(__dirname, 'dist')));
+      .src(path.join(config.src, '*.js'))
+      .pipe(babel())
+      .pipe(gulp.dest(path.join(__dirname, 'dist')));
 });
 
 gulp.task('commit:pre', () => {
   const dist = path.join(__dirname, 'dist');
   const packageJson = path.join(__dirname, 'package.json');
   return gulp.src([packageJson, dist])
-    .pipe(git.add({args: '-f'}))
-    .pipe(git.commit('release: release version'));
+      .pipe(git.add({args: '-f'}))
+      .pipe(git.commit('release: release version'));
 });
 
 gulp.task('commit:post', () => {
   const dist = path.join(__dirname, 'dist');
   return gulp.src(dist)
-    .pipe(git.rm({args: '-r'}))
-    .pipe(git.commit('release: prepare next release'));
+      .pipe(git.rm({args: '-r'}))
+      .pipe(git.commit('release: prepare next release'));
 });
 
 gulp.task('tag', (done) => {
@@ -96,9 +96,9 @@ gulp.task('tag', (done) => {
 ['major', 'minor', 'patch'].forEach((level) => {
   gulp.task(`bump:${level}`, () => {
     return gulp.src(path.join(__dirname, 'package.json'))
-      .pipe(bump({type: level}))
-      .on('error', (e) => log.error(e))
-      .pipe(gulp.dest(__dirname));
+        .pipe(bump({type: level}))
+        .on('error', (e) => log.error(e))
+        .pipe(gulp.dest(__dirname));
   });
 
   gulp.task('release:' + level, ['build'], () => {
