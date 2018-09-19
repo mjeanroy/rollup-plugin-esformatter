@@ -27,7 +27,7 @@
   "dependencies": {
     "diff": "3.5.0",
     "esformatter": "^0.10.0",
-    "magic-string": "0.25.0"
+    "magic-string": "0.25.1"
   },
   "devDependencies": {
     "@babel/core": "7.1.0",
