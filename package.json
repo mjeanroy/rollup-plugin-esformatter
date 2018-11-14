@@ -30,7 +30,7 @@
     "magic-string": "0.25.1"
   },
   "devDependencies": {
-    "@babel/core": "7.1.5",
+    "@babel/core": "7.1.6",
     "@babel/preset-env": "7.1.5",
     "del": "3.0.0",
     "eslint": "5.5.0",
