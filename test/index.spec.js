@@ -47,7 +47,9 @@ describe('rollup-plugin-esformatter', () => {
     console.log.and.stub();
 
     const code = 'var foo=0;var test="hello world";';
-    const result = instance.transformBundle(code);
+    const chunk = {isEntry: false, imports: []};
+    const outputOptions = {};
+    const result = instance.renderChunk(code, chunk, outputOptions);
 
     expect(console.log).toHaveBeenCalledWith(
         '[rollup-plugin-esformatter] Sourcemap is enabled, computing diff is required'
@@ -71,7 +73,9 @@ describe('rollup-plugin-esformatter', () => {
     instance.options();
 
     const code = 'var foo=0;var test="hello world";';
-    const result = instance.transformBundle(code);
+    const chunk = {isEntry: false, imports: []};
+    const outputOptions = {};
+    const result = instance.renderChunk(code, chunk, outputOptions);
 
     expect(console.log).not.toHaveBeenCalled();
     expect(result.map).not.toBeDefined();
@@ -97,7 +101,9 @@ describe('rollup-plugin-esformatter', () => {
     console.log.and.stub();
 
     const code = 'var foo=0;var test="hello world";';
-    const result = instance.transformBundle(code);
+    const chunk = {isEntry: false, imports: []};
+    const outputOptions = {};
+    const result = instance.renderChunk(code, chunk, outputOptions);
 
     expect(result.map).toBeDefined();
     expect(result.code).toBe(
@@ -115,9 +121,9 @@ describe('rollup-plugin-esformatter', () => {
     console.log.and.stub();
 
     const code = 'var foo=0;var test="hello world";';
-    const result = instance.transformBundle(code, {
-      sourcemap: true,
-    });
+    const chunk = {isEntry: false, imports: []};
+    const outputOptions = {sourcemap: true};
+    const result = instance.renderChunk(code, chunk, outputOptions);
 
     expect(console.log).toHaveBeenCalledWith(
         '[rollup-plugin-esformatter] Sourcemap is enabled, computing diff is required'
@@ -143,9 +149,9 @@ describe('rollup-plugin-esformatter', () => {
     console.log.and.stub();
 
     const code = 'var foo=0;var test="hello world";';
-    const result = instance.transformBundle(code, {
-      sourceMap: true,
-    });
+    const chunk = {isEntry: false, imports: []};
+    const outputOptions = {sourceMap: true};
+    const result = instance.renderChunk(code, chunk, outputOptions);
 
     expect(console.log).toHaveBeenCalledWith(
         '[rollup-plugin-esformatter] Sourcemap is enabled, computing diff is required'
@@ -171,9 +177,9 @@ describe('rollup-plugin-esformatter', () => {
     console.log.and.stub();
 
     const code = 'var foo=0;var test="hello world";';
-    const result = instance.transformBundle(code, {
-      sourcemap: false,
-    });
+    const chunk = {isEntry: false, imports: []};
+    const outputOptions = {sourcemap: false};
+    const result = instance.renderChunk(code, chunk, outputOptions);
 
     expect(console.log).not.toHaveBeenCalled();
     expect(result.map).not.toBeDefined();
@@ -199,7 +205,9 @@ describe('rollup-plugin-esformatter', () => {
     console.log.and.stub();
 
     const code = 'var foo=0;var test="hello world";';
-    const result = instance.transformBundle(code);
+    const chunk = {isEntry: false, imports: []};
+    const outputOptions = {};
+    const result = instance.renderChunk(code, chunk, outputOptions);
 
     expect(result.map).toBeDefined();
     expect(result.code).toBe(
@@ -226,7 +234,9 @@ describe('rollup-plugin-esformatter', () => {
     console.log.and.stub();
 
     const code = 'var foo=0;var test="hello world";';
-    const result = instance.transformBundle(code);
+    const chunk = {isEntry: false, imports: []};
+    const outputOptions = {};
+    const result = instance.renderChunk(code, chunk, outputOptions);
 
     expect(result.map).toBeDefined();
     expect(result.code).toBe(
@@ -253,7 +263,9 @@ describe('rollup-plugin-esformatter', () => {
     console.log.and.stub();
 
     const code = 'var foo=0;var test="hello world";';
-    const result = instance.transformBundle(code);
+    const chunk = {isEntry: false, imports: []};
+    const outputOptions = {};
+    const result = instance.renderChunk(code, chunk, outputOptions);
 
     expect(result.map).toBeDefined();
     expect(result.code).toBe(
@@ -275,7 +287,9 @@ describe('rollup-plugin-esformatter', () => {
     console.log.and.stub();
 
     const code = 'var foo=0;var test="hello world";';
-    const result = instance.transformBundle(code);
+    const chunk = {isEntry: false, imports: []};
+    const outputOptions = {};
+    const result = instance.renderChunk(code, chunk, outputOptions);
 
     expect(result.map).toBeDefined();
     expect(result.code).toBe(
@@ -297,7 +311,9 @@ describe('rollup-plugin-esformatter', () => {
     console.log.and.stub();
 
     const code = 'var foo=0;var test="hello world";';
-    const result = instance.transformBundle(code);
+    const chunk = {isEntry: false, imports: []};
+    const outputOptions = {};
+    const result = instance.renderChunk(code, chunk, outputOptions);
 
     expect(result.map).toBeDefined();
     expect(result.code).toBe(
@@ -322,7 +338,9 @@ describe('rollup-plugin-esformatter', () => {
     console.log.and.stub();
 
     const code = 'var foo    =    0;\nvar test = "hello world";';
-    const result = instance.transformBundle(code);
+    const chunk = {isEntry: false, imports: []};
+    const outputOptions = {};
+    const result = instance.renderChunk(code, chunk, outputOptions);
 
     expect(result.map).toBeDefined();
     expect(result.code).toBe(
@@ -347,7 +365,9 @@ describe('rollup-plugin-esformatter', () => {
     console.log.and.stub();
 
     const code = 'var foo    =    0;var test = "hello world";';
-    const result = instance.transformBundle(code);
+    const chunk = {isEntry: false, imports: []};
+    const outputOptions = {};
+    const result = instance.renderChunk(code, chunk, outputOptions);
 
     expect(result.map).toBeDefined();
     expect(result.code).toBe(
@@ -363,7 +383,11 @@ describe('rollup-plugin-esformatter', () => {
 
     const instance = plugin(options);
     instance.options({});
-    instance.transformBundle('var foo = 0;');
+
+    const code = 'var foo = 0;';
+    const chunk = {isEntry: false, imports: []};
+    const outputOptions = {};
+    instance.renderChunk(code, chunk, outputOptions);
 
     // It should not have been touched.
     expect(options).toEqual({
@@ -378,10 +402,13 @@ describe('rollup-plugin-esformatter', () => {
 
     spyOn(esformatter, 'format').and.callThrough();
 
-    const code = 'var foo = 0;';
     const instance = plugin(options);
     instance.options({});
-    instance.transformBundle(code);
+
+    const code = 'var foo = 0;';
+    const chunk = {isEntry: false, imports: []};
+    const outputOptions = {};
+    instance.renderChunk(code, chunk, outputOptions);
 
     expect(esformatter.format).toHaveBeenCalledWith(code, undefined);
     expect(options).toEqual({
@@ -397,10 +424,13 @@ describe('rollup-plugin-esformatter', () => {
 
     spyOn(esformatter, 'format').and.callThrough();
 
-    const code = 'var foo = 0;';
     const instance = plugin(options);
     instance.options({});
-    instance.transformBundle(code);
+
+    const code = 'var foo = 0;';
+    const chunk = {isEntry: false, imports: []};
+    const outputOptions = {};
+    instance.renderChunk(code, chunk, outputOptions);
 
     expect(esformatter.format).toHaveBeenCalledWith(code, {
       singleQuote: true,
