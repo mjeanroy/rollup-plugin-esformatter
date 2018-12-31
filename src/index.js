@@ -80,10 +80,11 @@ module.exports = (options) => {
      * Function called by `rollup` before generating final bundle.
      *
      * @param {string} source Souce code of the final bundle.
+     * @param {Object} chunk The current chunk being processed.
      * @param {Object} outputOptions Output option.
      * @return {Object} The result containing a `code` property and, if source map is enabled, a `map` property.
      */
-    transformBundle(source, outputOptions) {
+    renderChunk(source, chunk, outputOptions) {
       const output = esformatter.format(source, newOptions);
       const outputOptionsSourcemap = isNil(outputOptions) ? null : isSourceMapEnabled(outputOptions);
 
