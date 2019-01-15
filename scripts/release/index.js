@@ -22,6 +22,7 @@
  * SOFTWARE.
  */
 
+const fs = require('fs');
 const gulp = require('gulp');
 const config = require('../config');
 const git = require('gulp-git');
@@ -74,9 +75,16 @@ function prepareNextRelease() {
  * @return {void}
  */
 function tagRelease(done) {
-  const pkg = require(config.pkg);
-  const version = pkg.version;
-  git.tag(`v${version}`, `release: tag version ${version}`, done);
+  fs.readFile(config.pkg, 'utf-8', (err, content) => {
+    if (err) {
+      done(err);
+      return;
+    }
+
+    const pkg = JSON.parse(content);
+    const version = pkg.version;
+    git.tag(`v${version}`, `release: tag version ${version}`, done);
+  });
 }
 
 /**
