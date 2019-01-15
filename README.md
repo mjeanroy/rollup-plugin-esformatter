@@ -59,7 +59,7 @@ module.exports = {
   plugins: [
     // Run plugin with esformatter options.
     esformatter({
-      sourceMap: true, // Can also be disabled/enabled here.
+      sourcemap: true, // Can also be disabled/enabled here.
     }),
   ],
 };
@@ -67,6 +67,10 @@ module.exports = {
 
 ## ChangeLogs
 
+- 0.6.0
+  - Add rollup >= 1 compatibility (use new hook, remove call to deprecated ones), keep compatibility with rollup < 1.
+  - Deprecate `sourceMap` option (camelcase), use `sourcemap` option instead (lowercase).
+  - Various dependency updates.
 - 0.5.0
   - Add compatibility with rollup >= 0.53 with output `sourcemap` option (see [rollup #1583](https://github.com/rollup/rollup/issues/1583)).
   - Avoid side-effect and do not change the plugin options (see [032be5](https://github.com/mjeanroy/rollup-plugin-prettier/commit/032be56317ab83cd87c2460f1dadc05a617c0d12)).
