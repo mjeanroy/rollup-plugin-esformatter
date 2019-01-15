@@ -1,6 +1,6 @@
 {
   "name": "rollup-plugin-esformatter",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "description": "Rollup plugin to beautify bundle with esformatter",
   "main": "dist/index.js",
   "scripts": {
