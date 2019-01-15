@@ -29,7 +29,7 @@ const prettier = require('gulp-prettier');
 const config = require('../config');
 
 module.exports = function build() {
-  return gulp.src(path.join(config.src, '*.js'))
+  return gulp.src(path.join(config.src, '**', '*.js'))
       .pipe(babel())
       .pipe(prettier())
       .pipe(gulp.dest(config.dist));
