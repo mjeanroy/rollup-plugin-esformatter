@@ -27,7 +27,7 @@
   },
   "license": "MIT",
   "dependencies": {
-    "diff": "3.5.0",
+    "diff": "4.0.1",
     "esformatter": "^0.10.0",
     "lodash.hasin": "4.5.2",
     "lodash.isempty": "4.4.0",
