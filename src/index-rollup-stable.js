@@ -24,8 +24,28 @@
 
 'use strict';
 
-const rollup = require('rollup');
-const VERSION = rollup.VERSION || '0';
-const MAJOR_VERSION = Number(VERSION.split('.')[0]) || 0;
-const IS_ROLLUP_LEGACY = MAJOR_VERSION === 0;
-module.exports = IS_ROLLUP_LEGACY ? require('./index-rollup-legacy.js') : require('./index-rollup-stable.js');
+const RollupPluginEsFormatter = require('./rollup-plugin-esformatter.js');
+
+module.exports = (options) => {
+  const plugin = new RollupPluginEsFormatter(options);
+
+  return {
+    /**
+     * The plugin name.
+     * @type {string}
+     */
+    name: plugin.name,
+
+    /**
+     * Function called by `rollup` before generating final bundle.
+     *
+     * @param {string} source Souce code of the final bundle.
+     * @param {Object} chunk The current chunk.
+     * @param {Object} outputOptions Output option.
+     * @return {Object} The result containing a `code` property and, if source map is enabled, a `map` property.
+     */
+    renderChunk(source, chunk, outputOptions = {}) {
+      return plugin.reformat(source, outputOptions.sourcemap);
+    },
+  };
+};

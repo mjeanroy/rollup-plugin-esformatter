@@ -25,11 +25,13 @@
 'use strict';
 
 const esformatter = require('esformatter');
-const plugin = require('../dist/index.js');
+const verifyWarnLogsBecauseOfSourcemap = require('./utils/verify-warn-logs-because-of-source-map.js');
+const verifyWarnLogsNotTriggered = require('./utils/verify-warn-logs-not-triggered.js');
+const plugin = require('../dist/index-rollup-legacy.js');
 
-describe('rollup-plugin-esformatter', () => {
+describe('rollup-plugin-esformatter [legacy]', () => {
   beforeEach(() => {
-    spyOn(console, 'log').and.callThrough();
+    spyOn(console, 'warn');
   });
 
   it('should have a name', () => {
@@ -37,28 +39,18 @@ describe('rollup-plugin-esformatter', () => {
     expect(instance.name).toBe('rollup-plugin-esformatter');
   });
 
-  it('should run esformatter with source map', () => {
+  it('should run esformatter with sourceMap (camelcase) enabled in input options', () => {
     const instance = plugin();
 
     instance.options({
       sourceMap: true,
     });
 
-    console.log.and.stub();
-
     const code = 'var foo=0;var test="hello world";';
-    const chunk = {isEntry: false, imports: []};
     const outputOptions = {};
-    const result = instance.renderChunk(code, chunk, outputOptions);
+    const result = instance.transformBundle(code, outputOptions);
 
-    expect(console.log).toHaveBeenCalledWith(
-        '[rollup-plugin-esformatter] Sourcemap is enabled, computing diff is required'
-    );
-
-    expect(console.log).toHaveBeenCalledWith(
-        '[rollup-plugin-esformatter] This may take a moment (depends on the size of your bundle)'
-    );
-
+    verifyWarnLogsBecauseOfSourcemap();
     expect(result.map).toBeDefined();
     expect(result.code).toBe(
         'var foo = 0;\n' +
@@ -66,130 +58,7 @@ describe('rollup-plugin-esformatter', () => {
     );
   });
 
-  it('should run esformatter without source map', () => {
-    const instance = plugin();
-
-    // Run the option.
-    instance.options();
-
-    const code = 'var foo=0;var test="hello world";';
-    const chunk = {isEntry: false, imports: []};
-    const outputOptions = {};
-    const result = instance.renderChunk(code, chunk, outputOptions);
-
-    expect(console.log).not.toHaveBeenCalled();
-    expect(result.map).not.toBeDefined();
-    expect(result.code).toBe(
-        'var foo = 0;\n' +
-        'var test = "hello world";'
-    );
-  });
-
-  it('should run esformatter with sourceMap (camelcase) options', () => {
-    const options = {
-      indent: {
-        value: '  ',
-      },
-    };
-
-    const instance = plugin(options);
-
-    instance.options({
-      sourceMap: true,
-    });
-
-    console.log.and.stub();
-
-    const code = 'var foo=0;var test="hello world";';
-    const chunk = {isEntry: false, imports: []};
-    const outputOptions = {};
-    const result = instance.renderChunk(code, chunk, outputOptions);
-
-    expect(result.map).toBeDefined();
-    expect(result.code).toBe(
-        'var foo = 0;\n' +
-        'var test = "hello world";'
-    );
-  });
-
-  it('should run esformatter with sourcemap in output options', () => {
-    const instance = plugin();
-
-    // The input options may not contain `sourcemap` entry with rollup >= 0.53.
-    instance.options({});
-
-    console.log.and.stub();
-
-    const code = 'var foo=0;var test="hello world";';
-    const chunk = {isEntry: false, imports: []};
-    const outputOptions = {sourcemap: true};
-    const result = instance.renderChunk(code, chunk, outputOptions);
-
-    expect(console.log).toHaveBeenCalledWith(
-        '[rollup-plugin-esformatter] Sourcemap is enabled, computing diff is required'
-    );
-
-    expect(console.log).toHaveBeenCalledWith(
-        '[rollup-plugin-esformatter] This may take a moment (depends on the size of your bundle)'
-    );
-
-    expect(result.map).toBeDefined();
-    expect(result.code).toBe(
-        'var foo = 0;\n' +
-        'var test = "hello world";'
-    );
-  });
-
-  it('should run prettier with sourcemap in output options (camelcase format)', () => {
-    const instance = plugin();
-
-    // The input options may not contain `sourcemap` entry with rollup >= 0.53.
-    instance.options({});
-
-    console.log.and.stub();
-
-    const code = 'var foo=0;var test="hello world";';
-    const chunk = {isEntry: false, imports: []};
-    const outputOptions = {sourceMap: true};
-    const result = instance.renderChunk(code, chunk, outputOptions);
-
-    expect(console.log).toHaveBeenCalledWith(
-        '[rollup-plugin-esformatter] Sourcemap is enabled, computing diff is required'
-    );
-
-    expect(console.log).toHaveBeenCalledWith(
-        '[rollup-plugin-esformatter] This may take a moment (depends on the size of your bundle)'
-    );
-
-    expect(result.map).toBeDefined();
-    expect(result.code).toBe(
-        'var foo = 0;\n' +
-        'var test = "hello world";'
-    );
-  });
-
-  it('should run prettier with sourcemap disabled in output options', () => {
-    const instance = plugin();
-
-    // The input options may not contain `sourcemap` entry with rollup >= 0.53.
-    instance.options({});
-
-    console.log.and.stub();
-
-    const code = 'var foo=0;var test="hello world";';
-    const chunk = {isEntry: false, imports: []};
-    const outputOptions = {sourcemap: false};
-    const result = instance.renderChunk(code, chunk, outputOptions);
-
-    expect(console.log).not.toHaveBeenCalled();
-    expect(result.map).not.toBeDefined();
-    expect(result.code).toBe(
-        'var foo = 0;\n' +
-        'var test = "hello world";'
-    );
-  });
-
-  it('should run esformatter with sourcemap (lowercase) options', () => {
+  it('should run esformatter with sourcemap (lowercase) in input options', () => {
     const options = {
       indent: {
         value: '  ',
@@ -202,13 +71,11 @@ describe('rollup-plugin-esformatter', () => {
       sourcemap: true,
     });
 
-    console.log.and.stub();
-
     const code = 'var foo=0;var test="hello world";';
-    const chunk = {isEntry: false, imports: []};
     const outputOptions = {};
-    const result = instance.renderChunk(code, chunk, outputOptions);
+    const result = instance.transformBundle(code, outputOptions);
 
+    verifyWarnLogsBecauseOfSourcemap();
     expect(result.map).toBeDefined();
     expect(result.code).toBe(
         'var foo = 0;\n' +
@@ -216,7 +83,79 @@ describe('rollup-plugin-esformatter', () => {
     );
   });
 
-  it('should run esformatter with sourcemap in output options', () => {
+  it('should run esformatter without sourcemap by default', () => {
+    const instance = plugin();
+
+    // Run the option.
+    instance.options();
+
+    const code = 'var foo=0;var test="hello world";';
+    const outputOptions = {};
+    const result = instance.transformBundle(code, outputOptions);
+
+    verifyWarnLogsNotTriggered();
+    expect(result.map).not.toBeDefined();
+    expect(result.code).toBe(
+        'var foo = 0;\n' +
+        'var test = "hello world";'
+    );
+  });
+
+  it('should run esformatter with sourcemap (lowercase) in output options', () => {
+    const instance = plugin();
+
+    // The input options may not contain `sourcemap` entry with rollup >= 0.53.
+    instance.options({});
+
+    const code = 'var foo=0;var test="hello world";';
+    const outputOptions = {sourcemap: true};
+    const result = instance.transformBundle(code, outputOptions);
+
+    verifyWarnLogsBecauseOfSourcemap();
+    expect(result.map).toBeDefined();
+    expect(result.code).toBe(
+        'var foo = 0;\n' +
+        'var test = "hello world";'
+    );
+  });
+
+  it('should run prettier with sourcemap (camelcase) in output options', () => {
+    const instance = plugin();
+
+    // The input options may not contain `sourcemap` entry with rollup >= 0.53.
+    instance.options({});
+
+    const code = 'var foo=0;var test="hello world";';
+    const outputOptions = {sourceMap: true};
+    const result = instance.transformBundle(code, outputOptions);
+
+    verifyWarnLogsBecauseOfSourcemap();
+    expect(result.map).toBeDefined();
+    expect(result.code).toBe(
+        'var foo = 0;\n' +
+        'var test = "hello world";'
+    );
+  });
+
+  it('should run prettier with sourcemap (lowercase) disabled in output options', () => {
+    const instance = plugin();
+
+    // The input options may not contain `sourcemap` entry with rollup >= 0.53.
+    instance.options({});
+
+    const code = 'var foo=0;var test="hello world";';
+    const outputOptions = {sourcemap: false};
+    const result = instance.transformBundle(code, outputOptions);
+
+    verifyWarnLogsNotTriggered();
+    expect(result.map).not.toBeDefined();
+    expect(result.code).toBe(
+        'var foo = 0;\n' +
+        'var test = "hello world";'
+    );
+  });
+
+  it('should run esformatter with sourcemap (lowercase) in output options', () => {
     const options = {
       indent: {
         value: '  ',
@@ -231,13 +170,11 @@ describe('rollup-plugin-esformatter', () => {
       },
     });
 
-    console.log.and.stub();
-
     const code = 'var foo=0;var test="hello world";';
-    const chunk = {isEntry: false, imports: []};
     const outputOptions = {};
-    const result = instance.renderChunk(code, chunk, outputOptions);
+    const result = instance.transformBundle(code, outputOptions);
 
+    verifyWarnLogsBecauseOfSourcemap();
     expect(result.map).toBeDefined();
     expect(result.code).toBe(
         'var foo = 0;\n' +
@@ -245,7 +182,7 @@ describe('rollup-plugin-esformatter', () => {
     );
   });
 
-  it('should run esformatter with sourcemap in output array', () => {
+  it('should run esformatter with sourcemap (lowercase) in output array', () => {
     const options = {
       indent: {
         value: '  ',
@@ -260,13 +197,11 @@ describe('rollup-plugin-esformatter', () => {
       }],
     });
 
-    console.log.and.stub();
-
     const code = 'var foo=0;var test="hello world";';
-    const chunk = {isEntry: false, imports: []};
     const outputOptions = {};
-    const result = instance.renderChunk(code, chunk, outputOptions);
+    const result = instance.transformBundle(code, outputOptions);
 
+    verifyWarnLogsBecauseOfSourcemap();
     expect(result.map).toBeDefined();
     expect(result.code).toBe(
         'var foo = 0;\n' +
@@ -284,13 +219,11 @@ describe('rollup-plugin-esformatter', () => {
 
     const instance = plugin(options);
 
-    console.log.and.stub();
-
     const code = 'var foo=0;var test="hello world";';
-    const chunk = {isEntry: false, imports: []};
     const outputOptions = {};
-    const result = instance.renderChunk(code, chunk, outputOptions);
+    const result = instance.transformBundle(code, outputOptions);
 
+    verifyWarnLogsBecauseOfSourcemap();
     expect(result.map).toBeDefined();
     expect(result.code).toBe(
         'var foo = 0;\n' +
@@ -298,7 +231,7 @@ describe('rollup-plugin-esformatter', () => {
     );
   });
 
-  it('should run esformatter with sourcemap (camelcase) in plugin option', () => {
+  it('should run esformatter with sourceMap (camelcase) in plugin option', () => {
     const options = {
       sourceMap: true,
       indent: {
@@ -308,13 +241,33 @@ describe('rollup-plugin-esformatter', () => {
 
     const instance = plugin(options);
 
-    console.log.and.stub();
+    const code = 'var foo=0;var test="hello world";';
+    const outputOptions = {};
+    const result = instance.transformBundle(code, outputOptions);
+
+    verifyWarnLogsBecauseOfSourcemap();
+    expect(result.map).toBeDefined();
+    expect(result.code).toBe(
+        'var foo = 0;\n' +
+        'var test = "hello world";'
+    );
+  });
+
+  it('should run esformatter with sourcemap (lowercase) in plugin option', () => {
+    const options = {
+      sourcemap: true,
+      indent: {
+        value: '  ',
+      },
+    };
+
+    const instance = plugin(options);
 
     const code = 'var foo=0;var test="hello world";';
-    const chunk = {isEntry: false, imports: []};
     const outputOptions = {};
-    const result = instance.renderChunk(code, chunk, outputOptions);
+    const result = instance.transformBundle(code, outputOptions);
 
+    verifyWarnLogsBecauseOfSourcemap();
     expect(result.map).toBeDefined();
     expect(result.code).toBe(
         'var foo = 0;\n' +
@@ -324,6 +277,7 @@ describe('rollup-plugin-esformatter', () => {
 
   it('should remove unnecessary spaces', () => {
     const options = {
+      sourcemap: true,
       indent: {
         value: '  ',
       },
@@ -331,16 +285,9 @@ describe('rollup-plugin-esformatter', () => {
 
     const instance = plugin(options);
 
-    instance.options({
-      sourcemap: true,
-    });
-
-    console.log.and.stub();
-
     const code = 'var foo    =    0;\nvar test = "hello world";';
-    const chunk = {isEntry: false, imports: []};
     const outputOptions = {};
-    const result = instance.renderChunk(code, chunk, outputOptions);
+    const result = instance.transformBundle(code, outputOptions);
 
     expect(result.map).toBeDefined();
     expect(result.code).toBe(
@@ -351,6 +298,7 @@ describe('rollup-plugin-esformatter', () => {
 
   it('should add and remove characters', () => {
     const options = {
+      sourcemap: true,
       indent: {
         value: '  ',
       },
@@ -358,16 +306,9 @@ describe('rollup-plugin-esformatter', () => {
 
     const instance = plugin(options);
 
-    instance.options({
-      sourcemap: true,
-    });
-
-    console.log.and.stub();
-
     const code = 'var foo    =    0;var test = "hello world";';
-    const chunk = {isEntry: false, imports: []};
     const outputOptions = {};
-    const result = instance.renderChunk(code, chunk, outputOptions);
+    const result = instance.transformBundle(code, outputOptions);
 
     expect(result.map).toBeDefined();
     expect(result.code).toBe(
@@ -378,66 +319,58 @@ describe('rollup-plugin-esformatter', () => {
 
   it('should avoid side effect and do not modify plugin options', () => {
     const options = {
-      sourceMap: false,
+      sourcemap: false,
     };
 
     const instance = plugin(options);
-    instance.options({});
 
     const code = 'var foo = 0;';
-    const chunk = {isEntry: false, imports: []};
     const outputOptions = {};
-    instance.renderChunk(code, chunk, outputOptions);
+    instance.transformBundle(code, outputOptions);
 
     // It should not have been touched.
     expect(options).toEqual({
-      sourceMap: false,
+      sourcemap: false,
     });
   });
 
-  it('should run esformatter without sourcemap options', () => {
+  it('should run esformatter without any options if option object becomes empty', () => {
     const options = {
-      sourceMap: false,
+      sourcemap: false,
     };
 
     spyOn(esformatter, 'format').and.callThrough();
 
     const instance = plugin(options);
-    instance.options({});
-
     const code = 'var foo = 0;';
-    const chunk = {isEntry: false, imports: []};
     const outputOptions = {};
-    instance.renderChunk(code, chunk, outputOptions);
+    instance.transformBundle(code, outputOptions);
 
     expect(esformatter.format).toHaveBeenCalledWith(code, undefined);
     expect(options).toEqual({
-      sourceMap: false,
+      sourcemap: false,
     });
   });
 
   it('should run esformatter without sourcemap options and custom other options', () => {
     const options = {
-      sourceMap: false,
+      sourcemap: false,
       singleQuote: true,
     };
 
     spyOn(esformatter, 'format').and.callThrough();
 
     const instance = plugin(options);
-    instance.options({});
-
     const code = 'var foo = 0;';
-    const chunk = {isEntry: false, imports: []};
     const outputOptions = {};
-    instance.renderChunk(code, chunk, outputOptions);
+    instance.transformBundle(code, outputOptions);
 
     expect(esformatter.format).toHaveBeenCalledWith(code, {
       singleQuote: true,
     });
 
     expect(options).toEqual({
-      sourceMap: false,
+      sourcemap: false,
       singleQuote: true,
     });
   });

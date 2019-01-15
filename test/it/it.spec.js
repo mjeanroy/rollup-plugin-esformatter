@@ -29,13 +29,14 @@ const path = require('path');
 const rollup = require('rollup');
 const tmp = require('tmp');
 const Q = require('q');
+const verifyWarnLogsBecauseOfSourcemap = require('../utils/verify-warn-logs-because-of-source-map.js');
 const esformatter = require('../../dist/index.js');
 
 describe('rollup-plugin-esformatter', () => {
   let tmpDir;
 
   beforeEach(() => {
-    spyOn(console, 'log').and.callThrough();
+    spyOn(console, 'warn');
   });
 
   beforeEach(() => {
@@ -100,8 +101,6 @@ describe('rollup-plugin-esformatter', () => {
       ],
     };
 
-    console.log.and.stub();
-
     rollup.rollup(config)
         .then((bundle) => bundle.write(config.output))
         .then(() => {
@@ -113,7 +112,7 @@ describe('rollup-plugin-esformatter', () => {
 
             const content = data.toString();
             expect(content).toContain('//# sourceMappingURL');
-            expect(console.log).toHaveBeenCalledWith('[rollup-plugin-esformatter] Sourcemap is enabled, computing diff is required');
+            verifyWarnLogsBecauseOfSourcemap();
             done();
           });
         })
@@ -136,8 +135,6 @@ describe('rollup-plugin-esformatter', () => {
       ],
     };
 
-    console.log.and.stub();
-
     rollup.rollup(config)
         .then((bundle) => (
           Q.all(config.output.map((out) => bundle.write(out)))
@@ -151,7 +148,7 @@ describe('rollup-plugin-esformatter', () => {
 
             const content = data.toString();
             expect(content).toContain('//# sourceMappingURL');
-            expect(console.log).toHaveBeenCalledWith('[rollup-plugin-esformatter] Sourcemap is enabled, computing diff is required');
+            verifyWarnLogsBecauseOfSourcemap();
             done();
           });
         })
@@ -177,18 +174,16 @@ describe('rollup-plugin-esformatter', () => {
       ],
     };
 
-    console.log.and.stub();
-
     rollup.rollup(config)
         .then((bundle) => bundle.write(config.output))
         .then(() => {
-          fs.readFile(output, 'utf8', (err, data) => {
+          fs.readFile(output, 'utf8', (err) => {
             if (err) {
               done.fail(err);
               return;
             }
 
-            expect(console.log).toHaveBeenCalledWith('[rollup-plugin-esformatter] Sourcemap is enabled, computing diff is required');
+            verifyWarnLogsBecauseOfSourcemap();
             done();
           });
         })
@@ -214,18 +209,16 @@ describe('rollup-plugin-esformatter', () => {
       ],
     };
 
-    console.log.and.stub();
-
     rollup.rollup(config)
         .then((bundle) => bundle.write(config.output))
         .then(() => {
-          fs.readFile(output, 'utf8', (err, data) => {
+          fs.readFile(output, 'utf8', (err) => {
             if (err) {
               done.fail(err);
               return;
             }
 
-            expect(console.log).toHaveBeenCalledWith('[rollup-plugin-esformatter] Sourcemap is enabled, computing diff is required');
+            verifyWarnLogsBecauseOfSourcemap();
             done();
           });
         })
