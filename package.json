@@ -26,6 +26,9 @@
     "url": "git@github.com:mjeanroy/rollup-plugin-esformatter.git"
   },
   "license": "MIT",
+  "peerDependencies": {
+    "rollup": "<2"
+  },
   "dependencies": {
     "diff": "4.0.1",
     "esformatter": "^0.10.0",
