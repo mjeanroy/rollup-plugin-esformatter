@@ -67,6 +67,8 @@ module.exports = {
 
 ## ChangeLogs
 
+- 0.7.0
+  - Add rollup as a peer dependency.
 - 0.6.0
   - Add rollup >= 1 compatibility (use new hook, remove call to deprecated ones), keep compatibility with rollup < 1.
   - Deprecate `sourceMap` option (camelcase), use `sourcemap` option instead (lowercase).
