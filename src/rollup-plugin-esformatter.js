@@ -35,10 +35,10 @@ const esformatter = require('esformatter');
 /**
  * The internal plugin options.
  */
-const OPTIONS = [
+const OPTIONS = new Set([
   'sourcemap',
   'sourceMap',
-];
+]);
 
 /**
  * The rollup plugin for ESFormatter.
@@ -55,7 +55,7 @@ module.exports = class RollupPluginEsFormatter {
 
     // Initialize main options.
     this._options = omitBy(options || {}, (value, key) => (
-      OPTIONS.indexOf(key) >= 0
+      OPTIONS.has(key)
     ));
 
     // Reset to undefined if esformatter options are empty.
