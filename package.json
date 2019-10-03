@@ -31,7 +31,7 @@
   },
   "dependencies": {
     "diff": "4.0.1",
-    "esformatter": "^0.10.0",
+    "esformatter": "^0.11.1",
     "lodash.hasin": "4.5.2",
     "lodash.isempty": "4.4.0",
     "lodash.isnil": "4.0.0",
