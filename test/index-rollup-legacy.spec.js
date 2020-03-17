@@ -27,7 +27,7 @@
 const esformatter = require('esformatter');
 const verifyWarnLogsBecauseOfSourcemap = require('./utils/verify-warn-logs-because-of-source-map.js');
 const verifyWarnLogsNotTriggered = require('./utils/verify-warn-logs-not-triggered.js');
-const plugin = require('../dist/index-rollup-legacy.js');
+const plugin = require('../src/index-rollup-legacy.js');
 
 describe('rollup-plugin-esformatter [legacy]', () => {
   beforeEach(() => {

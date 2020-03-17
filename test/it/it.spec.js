@@ -30,7 +30,7 @@ const rollup = require('rollup');
 const tmp = require('tmp');
 const Q = require('q');
 const verifyWarnLogsBecauseOfSourcemap = require('../utils/verify-warn-logs-because-of-source-map.js');
-const esformatter = require('../../dist/index.js');
+const esformatter = require('../../src/index.js');
 
 describe('rollup-plugin-esformatter', () => {
   let tmpDir;

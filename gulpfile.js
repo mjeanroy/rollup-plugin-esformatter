@@ -30,6 +30,13 @@ const test = require('./scripts/test');
 const release = require('./scripts/release');
 const changelog = require('./scripts/changelog');
 
+require('@babel/register')({
+  ignore: [
+    /node_modules/,
+    /scripts/,
+  ],
+});
+
 const prebuild = gulp.series(clean, lint);
 const pretest = gulp.series(prebuild, build);
 const prerelease = gulp.series(pretest, test.test);
@@ -38,7 +45,7 @@ module.exports = {
   'clean': clean,
   'lint': lint,
   'build': gulp.series(prebuild, build),
-  'tdd': gulp.series(clean, build, test.tdd),
+  'tdd': test.tdd,
   'test': gulp.series(pretest, test.test),
   'release:patch': gulp.series(prerelease, release.patch),
   'release:minor': gulp.series(prerelease, release.minor),

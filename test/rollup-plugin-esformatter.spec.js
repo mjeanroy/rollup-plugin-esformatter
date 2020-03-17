@@ -24,7 +24,7 @@
 
 'use strict';
 
-const RollupPluginEsFormatter = require('../dist/rollup-plugin-esformatter.js');
+const RollupPluginEsFormatter = require('../src/rollup-plugin-esformatter.js');
 const verifyWarnLogsBecauseOfSourcemap = require('./utils/verify-warn-logs-because-of-source-map.js');
 const verifyWarnLogsNotTriggered = require('./utils/verify-warn-logs-not-triggered.js');
 
