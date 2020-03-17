@@ -22,12 +22,10 @@
  * SOFTWARE.
  */
 
-'use strict';
-
-const esformatter = require('esformatter');
-const verifyWarnLogsBecauseOfSourcemap = require('./utils/verify-warn-logs-because-of-source-map.js');
-const verifyWarnLogsNotTriggered = require('./utils/verify-warn-logs-not-triggered.js');
-const plugin = require('../src/index-rollup-legacy.js');
+import esformatter from 'esformatter';
+import verifyWarnLogsBecauseOfSourcemap from './utils/verify-warn-logs-because-of-source-map.js';
+import verifyWarnLogsNotTriggered from './utils/verify-warn-logs-not-triggered.js';
+import plugin from '../src/index-rollup-legacy.js';
 
 describe('rollup-plugin-esformatter [legacy]', () => {
   beforeEach(() => {

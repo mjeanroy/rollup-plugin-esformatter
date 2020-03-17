@@ -22,15 +22,13 @@
  * SOFTWARE.
  */
 
-'use strict';
-
-const omitBy = require('lodash.omitby');
-const isEmpty = require('lodash.isempty');
-const hasIn = require('lodash.hasin');
-const isNil = require('lodash.isnil');
-const MagicString = require('magic-string');
-const diff = require('diff');
-const esformatter = require('esformatter');
+import omitBy from 'lodash.omitby';
+import isEmpty from 'lodash.isempty';
+import hasIn from 'lodash.hasin';
+import isNil from 'lodash.isnil';
+import MagicString from 'magic-string';
+import {diffChars} from 'diff';
+import esformatter from 'esformatter';
 
 /**
  * The internal plugin options.
@@ -43,7 +41,7 @@ const OPTIONS = new Set([
 /**
  * The rollup plugin for ESFormatter.
  */
-module.exports = class RollupPluginEsFormatter {
+export default class RollupPluginEsFormatter {
   /**
    * Initialize plugin.
    *
@@ -113,7 +111,7 @@ module.exports = class RollupPluginEsFormatter {
     console.warn(`[${this.name}] This may take a moment (depends on the size of your bundle)`);
 
     const magicString = new MagicString(source);
-    const changes = diff.diffChars(source, output);
+    const changes = diffChars(source, output);
 
     let idx = 0;
 
@@ -137,4 +135,4 @@ module.exports = class RollupPluginEsFormatter {
       }),
     };
   }
-};
+}

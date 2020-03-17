@@ -27,7 +27,7 @@
  *
  * @return {void}
  */
-module.exports = function verifyWarnLogsNotTriggered() {
+export default function verifyWarnLogsNotTriggered() {
   expect(console.warn).not.toHaveBeenCalledWith(
       '[rollup-plugin-esformatter] Sourcemap is enabled, computing diff is required'
   );
@@ -35,4 +35,4 @@ module.exports = function verifyWarnLogsNotTriggered() {
   expect(console.warn).not.toHaveBeenCalledWith(
       '[rollup-plugin-esformatter] This may take a moment (depends on the size of your bundle)'
   );
-};
+}

@@ -22,13 +22,11 @@
  * SOFTWARE.
  */
 
-'use strict';
+import hasIn from 'lodash.hasin';
+import isNil from 'lodash.isnil';
+import RollupPluginEsFormatter from './rollup-plugin-esformatter.js';
 
-const hasIn = require('lodash.hasin');
-const isNil = require('lodash.isnil');
-const RollupPluginEsFormatter = require('./rollup-plugin-esformatter.js');
-
-module.exports = (options) => {
+export default (options) => {
   const plugin = new RollupPluginEsFormatter(options);
 
   return {

@@ -22,10 +22,13 @@
  * SOFTWARE.
  */
 
-'use strict';
+import {rollup} from 'rollup';
+import legacy from './index-rollup-legacy.js';
+import stable from './index-rollup-stable.js';
 
-const rollup = require('rollup');
 const VERSION = rollup.VERSION || '0';
 const MAJOR_VERSION = Number(VERSION.split('.')[0]) || 0;
 const IS_ROLLUP_LEGACY = MAJOR_VERSION === 0;
-module.exports = IS_ROLLUP_LEGACY ? require('./index-rollup-legacy.js') : require('./index-rollup-stable.js');
+const esformatter = IS_ROLLUP_LEGACY ? legacy : stable;
+
+export default esformatter;

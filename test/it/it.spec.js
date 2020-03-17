@@ -22,15 +22,13 @@
  * SOFTWARE.
  */
 
-'use strict';
-
-const fs = require('fs');
-const path = require('path');
-const rollup = require('rollup');
-const tmp = require('tmp');
-const Q = require('q');
-const verifyWarnLogsBecauseOfSourcemap = require('../utils/verify-warn-logs-because-of-source-map.js');
-const esformatter = require('../../src/index.js');
+import fs from 'fs';
+import path from 'path';
+import * as rollup from 'rollup';
+import tmp from 'tmp';
+import Q from 'q';
+import verifyWarnLogsBecauseOfSourcemap from '../utils/verify-warn-logs-because-of-source-map.js';
+import esformatter from '../../src/index.js';
 
 describe('rollup-plugin-esformatter', () => {
   let tmpDir;

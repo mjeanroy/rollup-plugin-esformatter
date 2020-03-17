@@ -22,11 +22,9 @@
  * SOFTWARE.
  */
 
-'use strict';
+import RollupPluginEsFormatter from './rollup-plugin-esformatter.js';
 
-const RollupPluginEsFormatter = require('./rollup-plugin-esformatter.js');
-
-module.exports = (options) => {
+export default (options) => {
   const plugin = new RollupPluginEsFormatter(options);
 
   return {

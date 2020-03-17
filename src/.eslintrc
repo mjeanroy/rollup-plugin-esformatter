@@ -1,8 +1,6 @@
 {
   "parserOptions": {
     "sourceType": "module"
-  },
-  "env": {
-    "jasmine": true
   }
 }
+  
