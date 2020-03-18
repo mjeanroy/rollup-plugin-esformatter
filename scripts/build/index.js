@@ -28,6 +28,7 @@ const babel = require('gulp-babel');
 const stripBanner = require('gulp-strip-banner');
 const headerComment = require('gulp-header-comment');
 const prettier = require('gulp-prettier');
+const rename = require('gulp-rename');
 const config = require('../config');
 
 module.exports = gulp.series(
@@ -50,7 +51,7 @@ function buildCjs() {
  * @return {NodeJS.WritableStream} The gulp stream.
  */
 function buildEsm() {
-  return build('es');
+  return build('mjs');
 }
 
 /**
@@ -65,5 +66,6 @@ function build(envName) {
       .pipe(babel({envName}))
       .pipe(headerComment({file: path.join(config.root, 'LICENSE')}))
       .pipe(prettier())
+      .pipe(rename({extname: `.${envName}`}))
       .pipe(gulp.dest(path.join(config.dist, envName)));
 }
