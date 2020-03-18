@@ -41,7 +41,7 @@ const OPTIONS = new Set([
 /**
  * The rollup plugin for ESFormatter.
  */
-export default class RollupPluginEsFormatter {
+export class RollupPluginEsFormatter {
   /**
    * Initialize plugin.
    *

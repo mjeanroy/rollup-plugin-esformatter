@@ -27,7 +27,7 @@ import path from 'path';
 import * as rollup from 'rollup';
 import tmp from 'tmp';
 import Q from 'q';
-import verifyWarnLogsBecauseOfSourcemap from '../utils/verify-warn-logs-because-of-source-map.js';
+import {verifyWarnLogsBecauseOfSourcemap} from '../utils/verify-warn-logs-because-of-source-map.js';
 import esformatter from '../../src/index.js';
 
 describe('rollup-plugin-esformatter', () => {

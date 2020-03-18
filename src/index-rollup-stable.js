@@ -22,9 +22,15 @@
  * SOFTWARE.
  */
 
-import RollupPluginEsFormatter from './rollup-plugin-esformatter.js';
+import {RollupPluginEsFormatter} from './rollup-plugin-esformatter.js';
 
-export default (options) => {
+/**
+ * Create plugin compatible with rollup >= 1.0.0
+ *
+ * @param {*} options Plugin options.
+ * @return {Objects} The plugin instance.
+ */
+export function rollupPluginStable(options) {
   const plugin = new RollupPluginEsFormatter(options);
 
   return {
@@ -46,4 +52,4 @@ export default (options) => {
       return plugin.reformat(source, outputOptions.sourcemap);
     },
   };
-};
+}

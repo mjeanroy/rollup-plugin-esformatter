@@ -23,9 +23,9 @@
  */
 
 import esformatter from 'esformatter';
-import verifyWarnLogsBecauseOfSourcemap from './utils/verify-warn-logs-because-of-source-map.js';
-import verifyWarnLogsNotTriggered from './utils/verify-warn-logs-not-triggered.js';
-import plugin from '../src/index-rollup-legacy.js';
+import {verifyWarnLogsBecauseOfSourcemap} from './utils/verify-warn-logs-because-of-source-map.js';
+import {verifyWarnLogsNotTriggered} from './utils/verify-warn-logs-not-triggered.js';
+import {rollupPluginLegacy} from '../src/index-rollup-legacy.js';
 
 describe('rollup-plugin-esformatter [legacy]', () => {
   beforeEach(() => {
@@ -33,12 +33,12 @@ describe('rollup-plugin-esformatter [legacy]', () => {
   });
 
   it('should have a name', () => {
-    const instance = plugin();
+    const instance = rollupPluginLegacy();
     expect(instance.name).toBe('rollup-plugin-esformatter');
   });
 
   it('should run esformatter with sourceMap (camelcase) enabled in input options', () => {
-    const instance = plugin();
+    const instance = rollupPluginLegacy();
 
     instance.options({
       sourceMap: true,
@@ -63,7 +63,7 @@ describe('rollup-plugin-esformatter [legacy]', () => {
       },
     };
 
-    const instance = plugin(options);
+    const instance = rollupPluginLegacy(options);
 
     instance.options({
       sourcemap: true,
@@ -82,7 +82,7 @@ describe('rollup-plugin-esformatter [legacy]', () => {
   });
 
   it('should run esformatter without sourcemap by default', () => {
-    const instance = plugin();
+    const instance = rollupPluginLegacy();
 
     // Run the option.
     instance.options();
@@ -100,7 +100,7 @@ describe('rollup-plugin-esformatter [legacy]', () => {
   });
 
   it('should run esformatter with sourcemap (lowercase) in output options', () => {
-    const instance = plugin();
+    const instance = rollupPluginLegacy();
 
     // The input options may not contain `sourcemap` entry with rollup >= 0.53.
     instance.options({});
@@ -118,7 +118,7 @@ describe('rollup-plugin-esformatter [legacy]', () => {
   });
 
   it('should run prettier with sourcemap (camelcase) in output options', () => {
-    const instance = plugin();
+    const instance = rollupPluginLegacy();
 
     // The input options may not contain `sourcemap` entry with rollup >= 0.53.
     instance.options({});
@@ -136,7 +136,7 @@ describe('rollup-plugin-esformatter [legacy]', () => {
   });
 
   it('should run prettier with sourcemap (lowercase) disabled in output options', () => {
-    const instance = plugin();
+    const instance = rollupPluginLegacy();
 
     // The input options may not contain `sourcemap` entry with rollup >= 0.53.
     instance.options({});
@@ -160,7 +160,7 @@ describe('rollup-plugin-esformatter [legacy]', () => {
       },
     };
 
-    const instance = plugin(options);
+    const instance = rollupPluginLegacy(options);
 
     instance.options({
       output: {
@@ -187,7 +187,7 @@ describe('rollup-plugin-esformatter [legacy]', () => {
       },
     };
 
-    const instance = plugin(options);
+    const instance = rollupPluginLegacy(options);
 
     instance.options({
       output: [{
@@ -215,7 +215,7 @@ describe('rollup-plugin-esformatter [legacy]', () => {
       },
     };
 
-    const instance = plugin(options);
+    const instance = rollupPluginLegacy(options);
 
     const code = 'var foo=0;var test="hello world";';
     const outputOptions = {};
@@ -237,7 +237,7 @@ describe('rollup-plugin-esformatter [legacy]', () => {
       },
     };
 
-    const instance = plugin(options);
+    const instance = rollupPluginLegacy(options);
 
     const code = 'var foo=0;var test="hello world";';
     const outputOptions = {};
@@ -259,7 +259,7 @@ describe('rollup-plugin-esformatter [legacy]', () => {
       },
     };
 
-    const instance = plugin(options);
+    const instance = rollupPluginLegacy(options);
 
     const code = 'var foo=0;var test="hello world";';
     const outputOptions = {};
@@ -281,7 +281,7 @@ describe('rollup-plugin-esformatter [legacy]', () => {
       },
     };
 
-    const instance = plugin(options);
+    const instance = rollupPluginLegacy(options);
 
     const code = 'var foo    =    0;\nvar test = "hello world";';
     const outputOptions = {};
@@ -302,7 +302,7 @@ describe('rollup-plugin-esformatter [legacy]', () => {
       },
     };
 
-    const instance = plugin(options);
+    const instance = rollupPluginLegacy(options);
 
     const code = 'var foo    =    0;var test = "hello world";';
     const outputOptions = {};
@@ -320,7 +320,7 @@ describe('rollup-plugin-esformatter [legacy]', () => {
       sourcemap: false,
     };
 
-    const instance = plugin(options);
+    const instance = rollupPluginLegacy(options);
 
     const code = 'var foo = 0;';
     const outputOptions = {};
@@ -339,7 +339,7 @@ describe('rollup-plugin-esformatter [legacy]', () => {
 
     spyOn(esformatter, 'format').and.callThrough();
 
-    const instance = plugin(options);
+    const instance = rollupPluginLegacy(options);
     const code = 'var foo = 0;';
     const outputOptions = {};
     instance.transformBundle(code, outputOptions);
@@ -358,7 +358,7 @@ describe('rollup-plugin-esformatter [legacy]', () => {
 
     spyOn(esformatter, 'format').and.callThrough();
 
-    const instance = plugin(options);
+    const instance = rollupPluginLegacy(options);
     const code = 'var foo = 0;';
     const outputOptions = {};
     instance.transformBundle(code, outputOptions);
