@@ -24,9 +24,25 @@
 
 import hasIn from 'lodash.hasin';
 import isNil from 'lodash.isnil';
-import RollupPluginEsFormatter from './rollup-plugin-esformatter.js';
+import {RollupPluginEsFormatter} from './rollup-plugin-esformatter.js';
 
-export default (options) => {
+/**
+ * Check if `sourcemap` option is enable or not.
+ *
+ * @param {Object} opts Options.
+ * @return {boolean} `true` if sourcemap is enabled, `false` otherwise.
+ */
+function isSourceMapEnabled(opts) {
+  return !!(opts.sourcemap || opts.sourceMap);
+}
+
+/**
+ * Create plugin compatible with rollup < 1.0.0
+ *
+ * @param {*} options Plugin options.
+ * @return {Objects} The plugin instance.
+ */
+export function rollupPluginLegacy(options) {
   const plugin = new RollupPluginEsFormatter(options);
 
   return {
@@ -74,14 +90,4 @@ export default (options) => {
       return plugin.reformat(source, sourcemap);
     },
   };
-};
-
-/**
- * Check if `sourcemap` option is enable or not.
- *
- * @param {Object} opts Options.
- * @return {boolean} `true` if sourcemap is enabled, `false` otherwise.
- */
-function isSourceMapEnabled(opts) {
-  return !!(opts.sourcemap || opts.sourceMap);
 }

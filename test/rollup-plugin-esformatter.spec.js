@@ -24,9 +24,9 @@
 
 'use strict';
 
-import RollupPluginEsFormatter from '../src/rollup-plugin-esformatter.js';
-import verifyWarnLogsBecauseOfSourcemap from './utils/verify-warn-logs-because-of-source-map.js';
-import verifyWarnLogsNotTriggered from './utils/verify-warn-logs-not-triggered.js';
+import {RollupPluginEsFormatter} from '../src/rollup-plugin-esformatter.js';
+import {verifyWarnLogsBecauseOfSourcemap} from './utils/verify-warn-logs-because-of-source-map.js';
+import {verifyWarnLogsNotTriggered} from './utils/verify-warn-logs-not-triggered.js';
 
 describe('RollupPluginEsFormatter', () => {
   beforeEach(() => {

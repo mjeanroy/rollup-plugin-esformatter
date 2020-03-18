@@ -27,7 +27,7 @@
  *
  * @return {void}
  */
-export default function verifyWarnLogsBecauseOfSourcemap() {
+export function verifyWarnLogsBecauseOfSourcemap() {
   expect(console.warn).toHaveBeenCalledWith(
       '[rollup-plugin-esformatter] Sourcemap is enabled, computing diff is required'
   );

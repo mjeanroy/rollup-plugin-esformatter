@@ -25,9 +25,9 @@
 'use strict';
 
 import esformatter from 'esformatter';
-import verifyWarnLogsBecauseOfSourcemap from './utils/verify-warn-logs-because-of-source-map.js';
-import verifyWarnLogsNotTriggered from './utils/verify-warn-logs-not-triggered.js';
-import plugin from '../src/index-rollup-stable.js';
+import {verifyWarnLogsBecauseOfSourcemap} from './utils/verify-warn-logs-because-of-source-map.js';
+import {verifyWarnLogsNotTriggered} from './utils/verify-warn-logs-not-triggered.js';
+import {rollupPluginStable} from '../src/index-rollup-stable.js';
 
 describe('rollup-plugin-esformatter [stable]', () => {
   beforeEach(() => {
@@ -35,12 +35,12 @@ describe('rollup-plugin-esformatter [stable]', () => {
   });
 
   it('should have a name', () => {
-    const instance = plugin();
+    const instance = rollupPluginStable();
     expect(instance.name).toBe('rollup-plugin-esformatter');
   });
 
   it('should run esformatter without sourcemap by default', () => {
-    const instance = plugin();
+    const instance = rollupPluginStable();
 
     const code = 'var foo=0;var test="hello world";';
     const chunk = {isEntry: false, imports: []};
@@ -56,7 +56,7 @@ describe('rollup-plugin-esformatter [stable]', () => {
   });
 
   it('should run esformatter with sourcemap in output options', () => {
-    const instance = plugin();
+    const instance = rollupPluginStable();
     const code = 'var foo=0;var test="hello world";';
     const chunk = {isEntry: false, imports: []};
     const outputOptions = {sourcemap: true};
@@ -71,7 +71,7 @@ describe('rollup-plugin-esformatter [stable]', () => {
   });
 
   it('should run prettier with sourcemap (lowercase) disabled in output options', () => {
-    const instance = plugin();
+    const instance = rollupPluginStable();
     const code = 'var foo=0;var test="hello world";';
     const chunk = {isEntry: false, imports: []};
     const outputOptions = {sourcemap: false};
@@ -93,7 +93,7 @@ describe('rollup-plugin-esformatter [stable]', () => {
       },
     };
 
-    const instance = plugin(options);
+    const instance = rollupPluginStable(options);
     const code = 'var foo=0;var test="hello world";';
     const chunk = {isEntry: false, imports: []};
     const outputOptions = {};
@@ -115,7 +115,7 @@ describe('rollup-plugin-esformatter [stable]', () => {
       },
     };
 
-    const instance = plugin(options);
+    const instance = rollupPluginStable(options);
 
     const code = 'var foo=0;var test="hello world";';
     const chunk = {isEntry: false, imports: []};
@@ -138,7 +138,7 @@ describe('rollup-plugin-esformatter [stable]', () => {
       },
     };
 
-    const instance = plugin(options);
+    const instance = rollupPluginStable(options);
 
     const code = 'var foo    =    0;\nvar test = "hello world";';
     const chunk = {isEntry: false, imports: []};
@@ -160,7 +160,7 @@ describe('rollup-plugin-esformatter [stable]', () => {
       },
     };
 
-    const instance = plugin(options);
+    const instance = rollupPluginStable(options);
     const code = 'var foo    =    0;var test = "hello world";';
     const chunk = {isEntry: false, imports: []};
     const outputOptions = {};
@@ -178,7 +178,7 @@ describe('rollup-plugin-esformatter [stable]', () => {
       sourcemap: false,
     };
 
-    const instance = plugin(options);
+    const instance = rollupPluginStable(options);
 
     const code = 'var foo = 0;';
     const chunk = {isEntry: false, imports: []};
@@ -198,7 +198,7 @@ describe('rollup-plugin-esformatter [stable]', () => {
 
     spyOn(esformatter, 'format').and.callThrough();
 
-    const instance = plugin(options);
+    const instance = rollupPluginStable(options);
     const code = 'var foo = 0;';
     const chunk = {isEntry: false, imports: []};
     const outputOptions = {};
@@ -218,7 +218,7 @@ describe('rollup-plugin-esformatter [stable]', () => {
 
     spyOn(esformatter, 'format').and.callThrough();
 
-    const instance = plugin(options);
+    const instance = rollupPluginStable(options);
     const code = 'var foo = 0;';
     const chunk = {isEntry: false, imports: []};
     const outputOptions = {};

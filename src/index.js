@@ -23,12 +23,16 @@
  */
 
 import {rollup} from 'rollup';
-import legacy from './index-rollup-legacy.js';
-import stable from './index-rollup-stable.js';
+import {rollupPluginLegacy} from './index-rollup-legacy.js';
+import {rollupPluginStable} from './index-rollup-stable.js';
 
 const VERSION = rollup.VERSION || '0';
 const MAJOR_VERSION = Number(VERSION.split('.')[0]) || 0;
 const IS_ROLLUP_LEGACY = MAJOR_VERSION === 0;
-const esformatter = IS_ROLLUP_LEGACY ? legacy : stable;
+const esformatter = IS_ROLLUP_LEGACY ? rollupPluginLegacy : rollupPluginStable;
+
+export {
+  esformatter,
+};
 
 export default esformatter;
