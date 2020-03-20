@@ -24,7 +24,7 @@
 
 import hasIn from 'lodash.hasin';
 import isNil from 'lodash.isnil';
-import {RollupPluginEsFormatter} from './rollup-plugin-esformatter.js';
+import {RollupPluginEsFormatter} from './rollup-plugin-esformatter';
 
 /**
  * Check if `sourcemap` option is enable or not.

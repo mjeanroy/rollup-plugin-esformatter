@@ -22,12 +22,10 @@
  * SOFTWARE.
  */
 
-'use strict';
-
 import esformatter from 'esformatter';
-import {verifyWarnLogsBecauseOfSourcemap} from './utils/verify-warn-logs-because-of-source-map.js';
-import {verifyWarnLogsNotTriggered} from './utils/verify-warn-logs-not-triggered.js';
-import {rollupPluginStable} from '../src/index-rollup-stable.js';
+import {verifyWarnLogsBecauseOfSourcemap} from './utils/verify-warn-logs-because-of-source-map';
+import {verifyWarnLogsNotTriggered} from './utils/verify-warn-logs-not-triggered';
+import {rollupPluginStable} from '../src/index-rollup-stable';
 
 describe('rollup-plugin-esformatter [stable]', () => {
   beforeEach(() => {

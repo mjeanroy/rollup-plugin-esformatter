@@ -27,7 +27,7 @@ import isEmpty from 'lodash.isempty';
 import hasIn from 'lodash.hasin';
 import isNil from 'lodash.isnil';
 import MagicString from 'magic-string';
-import {diffChars} from 'diff';
+import * as diff from 'diff';
 import esformatter from 'esformatter';
 
 /**
@@ -111,7 +111,7 @@ export class RollupPluginEsFormatter {
     console.warn(`[${this.name}] This may take a moment (depends on the size of your bundle)`);
 
     const magicString = new MagicString(source);
-    const changes = diffChars(source, output);
+    const changes = diff.diffChars(source, output);
 
     let idx = 0;
 

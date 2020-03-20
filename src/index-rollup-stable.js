@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-import {RollupPluginEsFormatter} from './rollup-plugin-esformatter.js';
+import {RollupPluginEsFormatter} from './rollup-plugin-esformatter';
 
 /**
  * Create plugin compatible with rollup >= 1.0.0

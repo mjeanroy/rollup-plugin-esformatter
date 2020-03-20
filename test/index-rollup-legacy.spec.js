@@ -23,9 +23,9 @@
  */
 
 import esformatter from 'esformatter';
-import {verifyWarnLogsBecauseOfSourcemap} from './utils/verify-warn-logs-because-of-source-map.js';
-import {verifyWarnLogsNotTriggered} from './utils/verify-warn-logs-not-triggered.js';
-import {rollupPluginLegacy} from '../src/index-rollup-legacy.js';
+import {verifyWarnLogsBecauseOfSourcemap} from './utils/verify-warn-logs-because-of-source-map';
+import {verifyWarnLogsNotTriggered} from './utils/verify-warn-logs-not-triggered';
+import {rollupPluginLegacy} from '../src/index-rollup-legacy';
 
 describe('rollup-plugin-esformatter [legacy]', () => {
   beforeEach(() => {

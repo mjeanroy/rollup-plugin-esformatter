@@ -23,8 +23,8 @@
  */
 
 import {rollup} from 'rollup';
-import {rollupPluginLegacy} from './index-rollup-legacy.js';
-import {rollupPluginStable} from './index-rollup-stable.js';
+import {rollupPluginLegacy} from './index-rollup-legacy';
+import {rollupPluginStable} from './index-rollup-stable';
 
 const VERSION = rollup.VERSION || '0';
 const MAJOR_VERSION = Number(VERSION.split('.')[0]) || 0;
