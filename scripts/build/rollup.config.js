@@ -22,13 +22,56 @@
  * SOFTWARE.
  */
 
-import {rollup} from 'rollup';
-import {rollupPluginLegacy} from './index-rollup-legacy';
-import {rollupPluginStable} from './index-rollup-stable';
+const path = require('path');
+const stripBanner = require('rollup-plugin-strip-banner');
+const babel = require('rollup-plugin-babel');
+const license = require('rollup-plugin-license');
+const prettier = require('rollup-plugin-prettier');
+const config = require('../config');
+const pkg = require('../../package.json');
 
-const VERSION = rollup.VERSION || '0';
-const MAJOR_VERSION = Number(VERSION.split('.')[0]) || 0;
-const IS_ROLLUP_LEGACY = MAJOR_VERSION === 0;
-const rollupEsformatter = IS_ROLLUP_LEGACY ? rollupPluginLegacy : rollupPluginStable;
+module.exports = {
+  input: path.join(config.src, 'index.js'),
+  output: [
+    {
+      format: 'cjs',
+      file: path.join(config.dist, 'index.js'),
+    },
 
-export default rollupEsformatter;
+    {
+      format: 'cjs',
+      file: path.join(config.dist, 'cjs', 'index.cjs'),
+    },
+
+    {
+      format: 'es',
+      file: path.join(config.dist, 'mjs', 'index.mjs'),
+    },
+  ],
+
+  plugins: [
+    stripBanner(),
+
+    babel({
+      envName: 'rollup',
+    }),
+
+    license({
+      banner: {
+        content: {
+          file: path.join(config.root, 'LICENSE'),
+        },
+      },
+    }),
+
+    prettier({
+      parser: 'babel',
+    }),
+  ],
+
+  external: [
+    ...Object.keys(pkg.dependencies),
+    ...Object.keys(pkg.peerDependencies),
+    ...Object.keys(pkg.devDependencies),
+  ],
+};

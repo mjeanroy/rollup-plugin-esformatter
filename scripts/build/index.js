@@ -22,48 +22,13 @@
  * SOFTWARE.
  */
 
-const path = require('path');
-const gulp = require('gulp');
-const babel = require('gulp-babel');
-const stripBanner = require('gulp-strip-banner');
-const headerComment = require('gulp-header-comment');
-const prettier = require('gulp-prettier');
-const config = require('../config');
+const rollup = require('rollup');
+const config = require('./rollup.config');
 
-module.exports = gulp.series(
-    buildCjs,
-    buildEsm
-);
-
-/**
- * Build CommonJS bundles.
- *
- * @return {NodeJS.WritableStream} The gulp stream.
- */
-function buildCjs() {
-  return build('cjs');
-}
-
-/**
- * Build ESM bundles.
- *
- * @return {NodeJS.WritableStream} The gulp stream.
- */
-function buildEsm() {
-  return build('es');
-}
-
-/**
- * Build bundle for given environment.
- *
- * @param {string} envName Environment id.
- * @return {NodeJS.WritableStream} The gulp stream.
- */
-function build(envName) {
-  return gulp.src(path.join(config.src, '**', '*.js'))
-      .pipe(stripBanner())
-      .pipe(babel({envName}))
-      .pipe(headerComment({file: path.join(config.root, 'LICENSE')}))
-      .pipe(prettier())
-      .pipe(gulp.dest(path.join(config.dist, envName)));
-}
+module.exports = function build() {
+  return rollup.rollup(config).then((bundle) => (
+    Promise.all(config.output.map((output) => (
+      bundle.write(output)
+    )))
+  ));
+};

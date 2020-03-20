@@ -12,6 +12,16 @@
   ],
 
   "env": {
+    "rollup": {
+      "presets": [
+        [
+          "@babel/preset-env", {
+            "modules": "false"
+          }
+        ]
+      ]
+    },
+
     "es": {
       "presets": [
         [
