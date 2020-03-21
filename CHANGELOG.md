@@ -1,3 +1,23 @@
+## 2.0.0 (2020-03-21)
+
+* release: prepare next release ([0f5794e](https://github.com/mjeanroy/rollup-plugin-esformatter/commit/0f5794e))
+* release: release version ([abc3e26](https://github.com/mjeanroy/rollup-plugin-esformatter/commit/abc3e26))
+* chore: support for rollup 2.x.x ([eaf1c0f](https://github.com/mjeanroy/rollup-plugin-esformatter/commit/eaf1c0f))
+
+
+
+## 1.0.0 (2020-03-21)
+
+* release: prepare next release ([b14d9ec](https://github.com/mjeanroy/rollup-plugin-esformatter/commit/b14d9ec))
+* release: release version ([4baa4bd](https://github.com/mjeanroy/rollup-plugin-esformatter/commit/4baa4bd))
+* chore: do not support camelcase sourceMap ([4cbcc22](https://github.com/mjeanroy/rollup-plugin-esformatter/commit/4cbcc22))
+* chore: remove support of rollup < 1.0.0 ([049ce3d](https://github.com/mjeanroy/rollup-plugin-esformatter/commit/049ce3d))
+* chore: supports node >= 6 ([dc3bb63](https://github.com/mjeanroy/rollup-plugin-esformatter/commit/dc3bb63))
+* chore: update gitignore ([3498c56](https://github.com/mjeanroy/rollup-plugin-esformatter/commit/3498c56))
+* docs: update changelog ([a1911a1](https://github.com/mjeanroy/rollup-plugin-esformatter/commit/a1911a1))
+
+
+
 ## 0.8.0 (2020-03-21)
 
 * release: prepare next release ([9a81268](https://github.com/mjeanroy/rollup-plugin-esformatter/commit/9a81268))
