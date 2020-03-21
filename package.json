@@ -3,15 +3,6 @@
   "version": "0.7.0",
   "description": "Rollup plugin to beautify bundle with esformatter",
   "main": "dist/index.js",
-  "module": "dist/mjs/index.mjs",
-  "exports": {
-    ".": {
-      "require": "./dist/cjs/index.cjs",
-      "import": "./dist/mjs/index.mjs",
-      "default": "./dist/index.js"
-    },
-    "./dist/": "./dist/"
-  },
   "scripts": {
     "clean": "gulp clean",
     "lint": "gulp lint",
