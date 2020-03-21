@@ -33,20 +33,7 @@ const pkg = require('../../package.json');
 module.exports = {
   input: path.join(config.src, 'index.js'),
   output: [
-    {
-      format: 'cjs',
-      file: path.join(config.dist, 'index.js'),
-    },
-
-    {
-      format: 'cjs',
-      file: path.join(config.dist, 'cjs', 'index.cjs'),
-    },
-
-    {
-      format: 'es',
-      file: path.join(config.dist, 'mjs', 'index.mjs'),
-    },
+    {format: 'cjs', file: path.join(config.dist, 'index.js')},
   ],
 
   plugins: [
@@ -72,6 +59,5 @@ module.exports = {
   external: [
     ...Object.keys(pkg.dependencies),
     ...Object.keys(pkg.peerDependencies),
-    ...Object.keys(pkg.devDependencies),
   ],
 };
