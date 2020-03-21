@@ -12,6 +12,12 @@ Install the plugin with NPM:
 
 `npm install --save-dev rollup-plugin-esformatter`
 
+This plugin follow rollup versioning:
+
+- Use `rollup-plugin-formatter@0.x.x` with `rollup@0.x.x`
+- Use `rollup-plugin-formatter@1.x.x` with `rollup@1.x.x`
+- Use `rollup-plugin-formatter@2.x.x` with `rollup@2.x.x`
+
 Then add it to your rollup configuration:
 
 const path = require('path');
