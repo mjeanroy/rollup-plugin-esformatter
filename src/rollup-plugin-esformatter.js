@@ -35,7 +35,6 @@ import esformatter from 'esformatter';
  */
 const OPTIONS = new Set([
   'sourcemap',
-  'sourceMap',
 ]);
 
 /**
