@@ -22,13 +22,6 @@
  * SOFTWARE.
  */
 
-import {rollup} from 'rollup';
-import {rollupPluginLegacy} from './index-rollup-legacy';
-import {rollupPluginStable} from './index-rollup-stable';
+import {rollupPlugin} from './rollup-plugin';
 
-const VERSION = rollup.VERSION || '0';
-const MAJOR_VERSION = Number(VERSION.split('.')[0]) || 0;
-const IS_ROLLUP_LEGACY = MAJOR_VERSION === 0;
-const rollupEsformatter = IS_ROLLUP_LEGACY ? rollupPluginLegacy : rollupPluginStable;
-
-export default rollupEsformatter;
+export default rollupPlugin;

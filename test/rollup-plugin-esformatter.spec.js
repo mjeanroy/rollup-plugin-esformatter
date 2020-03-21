@@ -65,21 +65,6 @@ describe('RollupPluginEsFormatter', () => {
     );
   });
 
-  it('should run esformatter with sourceMap (camelcase)', () => {
-    const plugin = new RollupPluginEsFormatter({sourceMap: true});
-    const code = 'var foo=0;var test="hello world";';
-    const result = plugin.reformat(code);
-
-    expect(plugin.getSourcemap()).toBe(true);
-
-    verifyWarnLogsBecauseOfSourcemap();
-    expect(result.map).toBeDefined();
-    expect(result.code).toBe(
-        'var foo = 0;\n' +
-        'var test = "hello world";'
-    );
-  });
-
   it('should run esformatter with sourcemap if it has been enabled', () => {
     const plugin = new RollupPluginEsFormatter();
     expect(plugin.getSourcemap()).toBeNull();
@@ -101,7 +86,7 @@ describe('RollupPluginEsFormatter', () => {
   });
 
   it('should run esformatter with sourcemap enable in reformat', () => {
-    const plugin = new RollupPluginEsFormatter({sourceMap: false});
+    const plugin = new RollupPluginEsFormatter({sourcemap: false});
     const code = 'var foo=0;var test="hello world";';
     const result = plugin.reformat(code, true);
 
@@ -116,7 +101,7 @@ describe('RollupPluginEsFormatter', () => {
   });
 
   it('should run esformatter without sourcemap enable in reformat', () => {
-    const plugin = new RollupPluginEsFormatter({sourceMap: true});
+    const plugin = new RollupPluginEsFormatter({sourcemap: true});
     const code = 'var foo=0;var test="hello world";';
     const result = plugin.reformat(code, false);
 

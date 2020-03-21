@@ -62,14 +62,7 @@ export class RollupPluginEsFormatter {
     }
 
     // Check if sourcemap is enabled by default.
-    if (hasIn(options, 'sourcemap')) {
-      this._sourcemap = options.sourcemap;
-    } else if (hasIn(options, 'sourceMap')) {
-      console.warn(`[${this.name}] The sourceMap option is deprecated, please use sourcemap instead.`);
-      this._sourcemap = options.sourceMap;
-    } else {
-      this._sourcemap = null;
-    }
+    this._sourcemap = hasIn(options, 'sourcemap') ? options.sourcemap : null;
   }
 
   /**

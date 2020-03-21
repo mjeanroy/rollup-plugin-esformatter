@@ -189,39 +189,4 @@ describe('rollup-plugin-esformatter', () => {
           done.fail(err);
         });
   });
-
-  it('should enable sourcemap (camelcase) on plugin', (done) => {
-    const output = path.join(tmpDir.name, 'bundle.js');
-    const config = {
-      input: path.join(__dirname, 'fixtures', 'bundle.js'),
-
-      output: {
-        file: output,
-        format: 'es',
-      },
-
-      plugins: [
-        esformatter({
-          sourceMap: true,
-        }),
-      ],
-    };
-
-    rollup.rollup(config)
-        .then((bundle) => bundle.write(config.output))
-        .then(() => {
-          fs.readFile(output, 'utf8', (err) => {
-            if (err) {
-              done.fail(err);
-              return;
-            }
-
-            verifyWarnLogsBecauseOfSourcemap();
-            done();
-          });
-        })
-        .catch((err) => {
-          done.fail(err);
-        });
-  });
 });

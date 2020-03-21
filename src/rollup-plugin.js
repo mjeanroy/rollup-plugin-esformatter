@@ -22,27 +22,15 @@
  * SOFTWARE.
  */
 
-import hasIn from 'lodash.hasin';
-import isNil from 'lodash.isnil';
 import {RollupPluginEsFormatter} from './rollup-plugin-esformatter';
 
 /**
- * Check if `sourcemap` option is enable or not.
- *
- * @param {Object} opts Options.
- * @return {boolean} `true` if sourcemap is enabled, `false` otherwise.
- */
-function isSourceMapEnabled(opts) {
-  return !!(opts.sourcemap || opts.sourceMap);
-}
-
-/**
- * Create plugin compatible with rollup < 1.0.0
+ * Create plugin instance.
  *
  * @param {*} options Plugin options.
  * @return {Objects} The plugin instance.
  */
-export function rollupPluginLegacy(options) {
+export function rollupPlugin(options) {
   const plugin = new RollupPluginEsFormatter(options);
 
   return {
@@ -53,41 +41,15 @@ export function rollupPluginLegacy(options) {
     name: plugin.name,
 
     /**
-     * Function called by `rollup` that is used to read the `sourceMap` setting.
-     *
-     * @param {Object} opts Rollup options.
-     * @return {void}
-     */
-    options(opts = {}) {
-      if (isNil(plugin.getSourcemap())) {
-        // Get the global `sourcemap` option on given object.
-        // Should support:
-        //  - `sourcemap` (lowercase) option which is the name with rollup >= 0.48.0,
-        //  - `sourceMap` (camelcase) option which is the (deprecated) name with rollup < 0.48.0.
-        const globalSourcemap = isSourceMapEnabled(opts);
-
-        // Since rollup 0.48, sourcemap option can be set on the `output` object.
-        const output = opts.output || {};
-        const outputSourceMap = Array.isArray(output) ? output.some(isSourceMapEnabled) : isSourceMapEnabled(output);
-
-        // Enable or disable `sourcemap` generation.
-        const sourcemap = globalSourcemap || outputSourceMap;
-        if (sourcemap !== false) {
-          plugin.enableSourcemap();
-        }
-      }
-    },
-
-    /**
      * Function called by `rollup` before generating final bundle.
      *
      * @param {string} source Souce code of the final bundle.
+     * @param {Object} chunk The current chunk.
      * @param {Object} outputOptions Output option.
      * @return {Object} The result containing a `code` property and, if source map is enabled, a `map` property.
      */
-    transformBundle(source, outputOptions = {}) {
-      const sourcemap = hasIn(outputOptions, 'sourcemap') ? outputOptions.sourcemap : outputOptions.sourceMap;
-      return plugin.reformat(source, sourcemap);
+    renderChunk(source, chunk, outputOptions = {}) {
+      return plugin.reformat(source, outputOptions.sourcemap);
     },
   };
 }

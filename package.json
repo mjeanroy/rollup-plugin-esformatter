@@ -27,7 +27,7 @@
   },
   "license": "MIT",
   "peerDependencies": {
-    "rollup": "<2"
+    "rollup": "^1.0.0"
   },
   "dependencies": {
     "diff": "4.0.2",
