@@ -24,18 +24,10 @@
 
 const path = require('path');
 const gulp = require('gulp');
-const log = require('../log');
+const eslint = require('gulp-eslint');
 const config = require('../config');
 
 module.exports = function lint() {
-  const nodeVersion = process.versions.node;
-  const major = Number(nodeVersion.split('.')[0]);
-  if (major < 8) {
-    log.debug(`Skipping ESLint because of node version compatibility (currenly in used: ${nodeVersion})`);
-    return Promise.resolve();
-  }
-
-  const eslint = require('gulp-eslint');
   const inputs = [
     path.join(config.root, '*.js'),
     path.join(config.src, '**', '*.js'),
