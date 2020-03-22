@@ -2,6 +2,7 @@
 
 [![Greenkeeper badge](https://badges.greenkeeper.io/mjeanroy/rollup-plugin-esformatter.svg)](https://greenkeeper.io/)
 [![Build Status](https://travis-ci.org/mjeanroy/rollup-plugin-esformatter.svg?branch=master)](https://travis-ci.org/mjeanroy/rollup-plugin-esformatter)
+![CI](https://github.com/mjeanroy/rollup-plugin-esformatter/workflows/CI/badge.svg)
 [![Npm version](https://badge.fury.io/js/rollup-plugin-esformatter.svg)](https://badge.fury.io/js/rollup-plugin-esformatter)
 
 Rollup plugin that can be used to run [esformatter](http://npmjs.com/package/esformatter) on the final bundle.
