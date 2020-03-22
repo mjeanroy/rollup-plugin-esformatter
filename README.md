@@ -73,6 +73,18 @@ module.exports = {
 
 ## ChangeLogs
 
+- 2.0.1
+  - Fix `package.json` to also support rollup 1.x.x.
+  - Add "engines" option in `package.json` file.
+- 2.0.0
+  - Add support of rollup >= 2.
+  - Remove support of node < 10.
+- 1.0.0
+  - Remove support of rollup < 1.0.0.
+  - Remove support for deprecated `sourceMap` (camelcase) option.
+  - Remove support for node < 6.
+- 0.8.0
+  - Dependency updates.
 - 0.7.0
   - Add rollup as a peer dependency.
 - 0.6.0
