@@ -57,7 +57,7 @@
     "rimraf": "3.0.2",
     "rollup": "2.7.6",
     "rollup-plugin-babel": "4.4.0",
-    "rollup-plugin-license": "0.13.0",
+    "rollup-plugin-license": "2.0.0",
     "rollup-plugin-prettier": "0.6.0",
     "rollup-plugin-strip-banner": "1.0.0",
     "run-sequence": "2.2.1",
