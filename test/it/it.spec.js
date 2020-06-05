@@ -155,7 +155,7 @@ describe('rollup-plugin-esformatter', () => {
         });
   });
 
-  it('should enable sourcemap (lowercase) on plugin', (done) => {
+  it('should enable sourcemap on plugin', (done) => {
     const output = path.join(tmpDir.name, 'bundle.js');
     const config = {
       input: path.join(__dirname, 'fixtures', 'bundle.js'),
@@ -163,6 +163,7 @@ describe('rollup-plugin-esformatter', () => {
       output: {
         file: output,
         format: 'es',
+        sourcemap: true,
       },
 
       plugins: [
