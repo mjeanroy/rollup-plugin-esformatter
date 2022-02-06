@@ -29,7 +29,7 @@ import {rollupPlugin} from '../src/rollup-plugin';
 
 describe('rollup-plugin', () => {
   beforeEach(() => {
-    spyOn(console, 'warn');
+    jest.spyOn(console, 'warn').mockImplementation(() => {});
   });
 
   it('should have a name', () => {
@@ -171,15 +171,14 @@ describe('rollup-plugin', () => {
       sourcemap: false,
     };
 
-    spyOn(esformatter, 'format').and.callThrough();
-
+    const formatFn = jest.spyOn(esformatter, 'format');
     const instance = rollupPlugin(options);
     const code = 'var foo = 0;';
     const chunk = {isEntry: false, imports: []};
     const outputOptions = {};
     instance.renderChunk(code, chunk, outputOptions);
 
-    expect(esformatter.format).toHaveBeenCalledWith(code, undefined);
+    expect(formatFn).toHaveBeenCalledWith(code, undefined);
     expect(options).toEqual({
       sourcemap: false,
     });
@@ -191,15 +190,14 @@ describe('rollup-plugin', () => {
       singleQuote: true,
     };
 
-    spyOn(esformatter, 'format').and.callThrough();
-
+    const formatFn = jest.spyOn(esformatter, 'format');
     const instance = rollupPlugin(options);
     const code = 'var foo = 0;';
     const chunk = {isEntry: false, imports: []};
     const outputOptions = {};
     instance.renderChunk(code, chunk, outputOptions);
 
-    expect(esformatter.format).toHaveBeenCalledWith(code, {
+    expect(formatFn).toHaveBeenCalledWith(code, {
       singleQuote: true,
     });
 

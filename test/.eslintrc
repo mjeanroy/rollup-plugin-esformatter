@@ -3,6 +3,7 @@
     "sourceType": "module"
   },
   "env": {
+    "jest": true,
     "jasmine": true
   }
 }

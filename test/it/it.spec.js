@@ -34,7 +34,7 @@ describe('rollup-plugin-esformatter', () => {
   let tmpDir;
 
   beforeEach(() => {
-    spyOn(console, 'warn');
+    jest.spyOn(console, 'warn').mockImplementation(() => {});
   });
 
   beforeEach(() => {

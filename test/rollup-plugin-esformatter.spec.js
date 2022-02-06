@@ -28,7 +28,7 @@ import {verifyWarnLogsNotTriggered} from './utils/verify-warn-logs-not-triggered
 
 describe('RollupPluginEsFormatter', () => {
   beforeEach(() => {
-    spyOn(console, 'warn');
+    jest.spyOn(console, 'warn').mockImplementation(() => {});
   });
 
   it('should create the plugin with a name', () => {
