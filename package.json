@@ -60,7 +60,7 @@
     "q": "1.5.1",
     "rimraf": "3.0.2",
     "rollup": "2.79.1",
-    "rollup-plugin-license": "2.8.1",
+    "rollup-plugin-license": "2.8.2",
     "rollup-plugin-prettier": "2.2.2",
     "rollup-plugin-strip-banner": "2.0.0",
     "run-sequence": "2.2.1",
