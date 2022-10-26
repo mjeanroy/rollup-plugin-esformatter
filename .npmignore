@@ -27,12 +27,14 @@ node_modules/
 
 # Do not send dev files
 /.github
+/.idea
 /test
 /src
 /scripts
+/.babelrc
 /.eslintrc
 /.eslintignore
-/.babelrc
+/.gitattributes
 /.npmrc
 /.nvmrc
 /.travis.yml
