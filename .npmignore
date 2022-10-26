@@ -31,6 +31,7 @@ node_modules/
 /test
 /src
 /scripts
+/package
 /.babelrc
 /.eslintrc
 /.eslintignore
@@ -39,6 +40,7 @@ node_modules/
 /.nvmrc
 /.travis.yml
 /gulpfile.js
+/*.tar.gz
 
 #OS
 .DS_Store
