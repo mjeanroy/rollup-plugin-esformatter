@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-const fs = require('fs');
+const fs = require('node:fs');
 const gulp = require('gulp');
 const config = require('../config');
 const git = require('gulp-git');
