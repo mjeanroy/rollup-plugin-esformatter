@@ -42,7 +42,7 @@
     "@babel/core": "7.23.0",
     "@babel/preset-env": "7.22.20",
     "@babel/register": "7.22.15",
-    "@rollup/plugin-babel": "6.0.3",
+    "@rollup/plugin-babel": "6.0.4",
     "babel-plugin-add-module-exports": "1.0.4",
     "eslint": "8.49.0",
     "eslint-config-google": "0.14.0",
