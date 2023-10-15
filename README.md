@@ -74,6 +74,13 @@ module.exports = {
 
 ## ChangeLogs
 
+- 3.1.0
+  - Support rollup ^4.0.0
+  - Dependency upgrades
+- 3.0.0
+  - Support rollup ^3.0.0
+  - Remove support of node < 14
+  - Dependency upgrades
 - 2.0.1
   - Fix `package.json` to also support rollup 1.x.x.
   - Add "engines" option in `package.json` file.
