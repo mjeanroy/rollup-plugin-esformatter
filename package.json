@@ -39,9 +39,9 @@
     "magic-string": "0.30.5"
   },
   "devDependencies": {
-    "@babel/core": "7.23.6",
-    "@babel/preset-env": "7.23.6",
-    "@babel/register": "7.22.15",
+    "@babel/core": "7.23.7",
+    "@babel/preset-env": "7.23.7",
+    "@babel/register": "7.23.7",
     "@rollup/plugin-babel": "6.0.4",
     "babel-plugin-add-module-exports": "1.0.4",
     "eslint": "8.56.0",
