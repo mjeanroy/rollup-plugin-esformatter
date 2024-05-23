@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-import {RollupPluginEsFormatter} from './rollup-plugin-esformatter';
+import { RollupPluginEsFormatter } from './rollup-plugin-esformatter';
 
 /**
  * Create plugin instance.

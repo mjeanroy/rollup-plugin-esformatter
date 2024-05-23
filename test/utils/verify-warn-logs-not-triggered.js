@@ -29,10 +29,10 @@
  */
 export function verifyWarnLogsNotTriggered() {
   expect(console.warn).not.toHaveBeenCalledWith(
-      '[rollup-plugin-esformatter] Sourcemap is enabled, computing diff is required'
+    '[rollup-plugin-esformatter] Sourcemap is enabled, computing diff is required',
   );
 
   expect(console.warn).not.toHaveBeenCalledWith(
-      '[rollup-plugin-esformatter] This may take a moment (depends on the size of your bundle)'
+    '[rollup-plugin-esformatter] This may take a moment (depends on the size of your bundle)',
   );
 }

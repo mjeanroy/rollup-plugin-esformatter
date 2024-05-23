@@ -96,7 +96,7 @@ export class RollupPluginEsFormatter {
     const defaultSourcemap = isNil(this._sourcemap) ? false : this._sourcemap;
     const outputSourcemap = isNil(sourcemap) ? defaultSourcemap : sourcemap;
     if (!outputSourcemap) {
-      return {code: output};
+      return { code: output };
     }
 
     console.warn(`[${this.name}] Sourcemap is enabled, computing diff is required`);
