@@ -25,6 +25,7 @@
 import esformatter from 'esformatter';
 import {verifyWarnLogsBecauseOfSourcemap} from './utils/verify-warn-logs-because-of-source-map';
 import {verifyWarnLogsNotTriggered} from './utils/verify-warn-logs-not-triggered';
+import {joinLines} from './utils/join-lines';
 import {rollupPlugin} from '../src/rollup-plugin';
 
 describe('rollup-plugin', () => {
@@ -48,8 +49,10 @@ describe('rollup-plugin', () => {
     verifyWarnLogsNotTriggered();
     expect(result.map).not.toBeDefined();
     expect(result.code).toBe(
-        'var foo = 0;\n' +
-        'var test = "hello world";'
+        joinLines([
+          'var foo = 0;',
+          'var test = "hello world";',
+        ])
     );
   });
 
@@ -63,8 +66,10 @@ describe('rollup-plugin', () => {
     verifyWarnLogsBecauseOfSourcemap();
     expect(result.map).toBeDefined();
     expect(result.code).toBe(
-        'var foo = 0;\n' +
-        'var test = "hello world";'
+        joinLines([
+          'var foo = 0;',
+          'var test = "hello world";',
+        ])
     );
   });
 
@@ -78,8 +83,10 @@ describe('rollup-plugin', () => {
     verifyWarnLogsNotTriggered();
     expect(result.map).not.toBeDefined();
     expect(result.code).toBe(
-        'var foo = 0;\n' +
-        'var test = "hello world";'
+        joinLines([
+          'var foo = 0;',
+          'var test = "hello world";',
+        ])
     );
   });
 
@@ -100,8 +107,10 @@ describe('rollup-plugin', () => {
     verifyWarnLogsBecauseOfSourcemap();
     expect(result.map).toBeDefined();
     expect(result.code).toBe(
-        'var foo = 0;\n' +
-        'var test = "hello world";'
+        joinLines([
+          'var foo = 0;',
+          'var test = "hello world";',
+        ])
     );
   });
 
@@ -122,8 +131,10 @@ describe('rollup-plugin', () => {
 
     expect(result.map).toBeDefined();
     expect(result.code).toBe(
-        'var foo = 0;\n' +
-        'var test = "hello world";'
+        joinLines([
+          'var foo = 0;',
+          'var test = "hello world";',
+        ])
     );
   });
 
@@ -143,8 +154,10 @@ describe('rollup-plugin', () => {
 
     expect(result.map).toBeDefined();
     expect(result.code).toBe(
-        'var foo = 0;\n' +
-        'var test = "hello world";'
+        joinLines([
+          'var foo = 0;',
+          'var test = "hello world";',
+        ])
     );
   });
 

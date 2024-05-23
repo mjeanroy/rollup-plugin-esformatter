@@ -25,6 +25,7 @@
 import {RollupPluginEsFormatter} from '../src/rollup-plugin-esformatter';
 import {verifyWarnLogsBecauseOfSourcemap} from './utils/verify-warn-logs-because-of-source-map';
 import {verifyWarnLogsNotTriggered} from './utils/verify-warn-logs-not-triggered';
+import {joinLines} from './utils/join-lines';
 
 describe('RollupPluginEsFormatter', () => {
   beforeEach(() => {
@@ -45,8 +46,10 @@ describe('RollupPluginEsFormatter', () => {
     verifyWarnLogsNotTriggered();
     expect(result.map).not.toBeDefined();
     expect(result.code).toBe(
-        'var foo = 0;\n' +
-        'var test = "hello world";'
+        joinLines([
+          'var foo = 0;',
+          'var test = "hello world";',
+        ])
     );
   });
 
@@ -60,8 +63,10 @@ describe('RollupPluginEsFormatter', () => {
     verifyWarnLogsBecauseOfSourcemap();
     expect(result.map).toBeDefined();
     expect(result.code).toBe(
-        'var foo = 0;\n' +
-        'var test = "hello world";'
+        joinLines([
+          'var foo = 0;',
+          'var test = "hello world";',
+        ])
     );
   });
 
@@ -80,8 +85,10 @@ describe('RollupPluginEsFormatter', () => {
     verifyWarnLogsBecauseOfSourcemap();
     expect(result.map).toBeDefined();
     expect(result.code).toBe(
-        'var foo = 0;\n' +
-        'var test = "hello world";'
+        joinLines([
+          'var foo = 0;',
+          'var test = "hello world";',
+        ])
     );
   });
 
@@ -95,8 +102,10 @@ describe('RollupPluginEsFormatter', () => {
     verifyWarnLogsBecauseOfSourcemap();
     expect(result.map).toBeDefined();
     expect(result.code).toBe(
-        'var foo = 0;\n' +
-        'var test = "hello world";'
+        joinLines([
+          'var foo = 0;',
+          'var test = "hello world";',
+        ])
     );
   });
 

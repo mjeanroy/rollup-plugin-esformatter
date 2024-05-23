@@ -28,6 +28,7 @@ import * as rollup from 'rollup';
 import tmp from 'tmp';
 import Q from 'q';
 import {verifyWarnLogsBecauseOfSourcemap} from '../utils/verify-warn-logs-because-of-source-map';
+import {joinLines} from '../utils/join-lines';
 import esformatter from '../../src/index';
 
 describe('rollup-plugin-esformatter', () => {
@@ -73,9 +74,11 @@ describe('rollup-plugin-esformatter', () => {
 
             expect(content).toBeDefined();
             expect(content).toContain(
-                'function sum(array) {\n' +
-                '  return array.reduce((acc, x) => acc + x, 0)\n' +
-                '}'
+                joinLines([
+                  'function sum(array) {',
+                  '  return array.reduce((acc, x) => acc + x, 0)',
+                  '}',
+                ])
             );
 
             done();
