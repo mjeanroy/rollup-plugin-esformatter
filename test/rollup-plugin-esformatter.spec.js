@@ -22,10 +22,10 @@
  * SOFTWARE.
  */
 
-import {RollupPluginEsFormatter} from '../src/rollup-plugin-esformatter';
-import {verifyWarnLogsBecauseOfSourcemap} from './utils/verify-warn-logs-because-of-source-map';
-import {verifyWarnLogsNotTriggered} from './utils/verify-warn-logs-not-triggered';
-import {joinLines} from './utils/join-lines';
+import { RollupPluginEsFormatter } from '../src/rollup-plugin-esformatter';
+import { verifyWarnLogsBecauseOfSourcemap } from './utils/verify-warn-logs-because-of-source-map';
+import { verifyWarnLogsNotTriggered } from './utils/verify-warn-logs-not-triggered';
+import { joinLines } from './utils/join-lines';
 
 describe('RollupPluginEsFormatter', () => {
   beforeEach(() => {
@@ -46,15 +46,18 @@ describe('RollupPluginEsFormatter', () => {
     verifyWarnLogsNotTriggered();
     expect(result.map).not.toBeDefined();
     expect(result.code).toBe(
-        joinLines([
-          'var foo = 0;',
-          'var test = "hello world";',
-        ])
+      joinLines([
+        'var foo = 0;',
+        'var test = "hello world";',
+      ]),
     );
   });
 
   it('should run esformatter with sourcemap (lowercase)', () => {
-    const plugin = new RollupPluginEsFormatter({sourcemap: true});
+    const plugin = new RollupPluginEsFormatter({
+      sourcemap: true,
+    });
+
     const code = 'var foo=0;var test="hello world";';
     const result = plugin.reformat(code);
 
@@ -63,10 +66,10 @@ describe('RollupPluginEsFormatter', () => {
     verifyWarnLogsBecauseOfSourcemap();
     expect(result.map).toBeDefined();
     expect(result.code).toBe(
-        joinLines([
-          'var foo = 0;',
-          'var test = "hello world";',
-        ])
+      joinLines([
+        'var foo = 0;',
+        'var test = "hello world";',
+      ]),
     );
   });
 
@@ -85,15 +88,18 @@ describe('RollupPluginEsFormatter', () => {
     verifyWarnLogsBecauseOfSourcemap();
     expect(result.map).toBeDefined();
     expect(result.code).toBe(
-        joinLines([
-          'var foo = 0;',
-          'var test = "hello world";',
-        ])
+      joinLines([
+        'var foo = 0;',
+        'var test = "hello world";',
+      ]),
     );
   });
 
   it('should run esformatter with sourcemap enable in reformat', () => {
-    const plugin = new RollupPluginEsFormatter({sourcemap: false});
+    const plugin = new RollupPluginEsFormatter({
+      sourcemap: false,
+    });
+
     const code = 'var foo=0;var test="hello world";';
     const result = plugin.reformat(code, true);
 
@@ -102,15 +108,18 @@ describe('RollupPluginEsFormatter', () => {
     verifyWarnLogsBecauseOfSourcemap();
     expect(result.map).toBeDefined();
     expect(result.code).toBe(
-        joinLines([
-          'var foo = 0;',
-          'var test = "hello world";',
-        ])
+      joinLines([
+        'var foo = 0;',
+        'var test = "hello world";',
+      ]),
     );
   });
 
   it('should run esformatter without sourcemap enable in reformat', () => {
-    const plugin = new RollupPluginEsFormatter({sourcemap: true});
+    const plugin = new RollupPluginEsFormatter({
+      sourcemap: true,
+    });
+
     const code = 'var foo=0;var test="hello world";';
     const result = plugin.reformat(code, false);
 
@@ -119,8 +128,10 @@ describe('RollupPluginEsFormatter', () => {
     verifyWarnLogsNotTriggered();
     expect(result.map).not.toBeDefined();
     expect(result.code).toBe(
-        'var foo = 0;\n' +
-        'var test = "hello world";'
+      joinLines([
+        'var foo = 0;',
+        'var test = "hello world";',
+      ]),
     );
   });
 });

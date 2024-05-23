@@ -22,6 +22,6 @@
  * SOFTWARE.
  */
 
-import {rollupPlugin} from './rollup-plugin';
+import { rollupPlugin } from './rollup-plugin';
 
 export default rollupPlugin;

@@ -23,10 +23,10 @@
  */
 
 import esformatter from 'esformatter';
-import {verifyWarnLogsBecauseOfSourcemap} from './utils/verify-warn-logs-because-of-source-map';
-import {verifyWarnLogsNotTriggered} from './utils/verify-warn-logs-not-triggered';
-import {joinLines} from './utils/join-lines';
-import {rollupPlugin} from '../src/rollup-plugin';
+import { verifyWarnLogsBecauseOfSourcemap } from './utils/verify-warn-logs-because-of-source-map';
+import { verifyWarnLogsNotTriggered } from './utils/verify-warn-logs-not-triggered';
+import { joinLines } from './utils/join-lines';
+import { rollupPlugin } from '../src/rollup-plugin';
 
 describe('rollup-plugin', () => {
   beforeEach(() => {
@@ -42,51 +42,70 @@ describe('rollup-plugin', () => {
     const instance = rollupPlugin();
 
     const code = 'var foo=0;var test="hello world";';
-    const chunk = {isEntry: false, imports: []};
     const outputOptions = {};
+    const chunk = {
+      isEntry: false,
+      imports: [],
+    };
+
     const result = instance.renderChunk(code, chunk, outputOptions);
 
     verifyWarnLogsNotTriggered();
     expect(result.map).not.toBeDefined();
     expect(result.code).toBe(
-        joinLines([
-          'var foo = 0;',
-          'var test = "hello world";',
-        ])
+      joinLines([
+        'var foo = 0;',
+        'var test = "hello world";',
+      ]),
     );
   });
 
   it('should run esformatter with sourcemap in output options', () => {
     const instance = rollupPlugin();
     const code = 'var foo=0;var test="hello world";';
-    const chunk = {isEntry: false, imports: []};
-    const outputOptions = {sourcemap: true};
+    const chunk = {
+      isEntry: false,
+      imports: [],
+    };
+
+    const outputOptions = {
+      sourcemap: true,
+    };
+
     const result = instance.renderChunk(code, chunk, outputOptions);
 
     verifyWarnLogsBecauseOfSourcemap();
     expect(result.map).toBeDefined();
     expect(result.code).toBe(
-        joinLines([
-          'var foo = 0;',
-          'var test = "hello world";',
-        ])
+      joinLines([
+        'var foo = 0;',
+        'var test = "hello world";',
+      ]),
     );
   });
 
   it('should run prettier with sourcemap (lowercase) disabled in output options', () => {
     const instance = rollupPlugin();
     const code = 'var foo=0;var test="hello world";';
-    const chunk = {isEntry: false, imports: []};
-    const outputOptions = {sourcemap: false};
+
+    const chunk = {
+      isEntry: false,
+      imports: [],
+    };
+
+    const outputOptions = {
+      sourcemap: false,
+    };
+
     const result = instance.renderChunk(code, chunk, outputOptions);
 
     verifyWarnLogsNotTriggered();
     expect(result.map).not.toBeDefined();
     expect(result.code).toBe(
-        joinLines([
-          'var foo = 0;',
-          'var test = "hello world";',
-        ])
+      joinLines([
+        'var foo = 0;',
+        'var test = "hello world";',
+      ]),
     );
   });
 
@@ -100,17 +119,21 @@ describe('rollup-plugin', () => {
 
     const instance = rollupPlugin(options);
     const code = 'var foo=0;var test="hello world";';
-    const chunk = {isEntry: false, imports: []};
     const outputOptions = {};
+    const chunk = {
+      isEntry: false,
+      imports: [],
+    };
+
     const result = instance.renderChunk(code, chunk, outputOptions);
 
     verifyWarnLogsBecauseOfSourcemap();
     expect(result.map).toBeDefined();
     expect(result.code).toBe(
-        joinLines([
-          'var foo = 0;',
-          'var test = "hello world";',
-        ])
+      joinLines([
+        'var foo = 0;',
+        'var test = "hello world";',
+      ]),
     );
   });
 
@@ -125,16 +148,20 @@ describe('rollup-plugin', () => {
     const instance = rollupPlugin(options);
 
     const code = 'var foo    =    0;\nvar test = "hello world";';
-    const chunk = {isEntry: false, imports: []};
     const outputOptions = {};
+    const chunk = {
+      isEntry: false,
+      imports: [],
+    };
+
     const result = instance.renderChunk(code, chunk, outputOptions);
 
     expect(result.map).toBeDefined();
     expect(result.code).toBe(
-        joinLines([
-          'var foo = 0;',
-          'var test = "hello world";',
-        ])
+      joinLines([
+        'var foo = 0;',
+        'var test = "hello world";',
+      ]),
     );
   });
 
@@ -148,16 +175,20 @@ describe('rollup-plugin', () => {
 
     const instance = rollupPlugin(options);
     const code = 'var foo    =    0;var test = "hello world";';
-    const chunk = {isEntry: false, imports: []};
     const outputOptions = {};
+    const chunk = {
+      isEntry: false,
+      imports: [],
+    };
+
     const result = instance.renderChunk(code, chunk, outputOptions);
 
     expect(result.map).toBeDefined();
     expect(result.code).toBe(
-        joinLines([
-          'var foo = 0;',
-          'var test = "hello world";',
-        ])
+      joinLines([
+        'var foo = 0;',
+        'var test = "hello world";',
+      ]),
     );
   });
 
@@ -169,8 +200,12 @@ describe('rollup-plugin', () => {
     const instance = rollupPlugin(options);
 
     const code = 'var foo = 0;';
-    const chunk = {isEntry: false, imports: []};
     const outputOptions = {};
+    const chunk = {
+      isEntry: false,
+      imports: [],
+    };
+
     instance.renderChunk(code, chunk, outputOptions);
 
     // It should not have been touched.
@@ -188,8 +223,12 @@ describe('rollup-plugin', () => {
 
     const instance = rollupPlugin(options);
     const code = 'var foo = 0;';
-    const chunk = {isEntry: false, imports: []};
     const outputOptions = {};
+    const chunk = {
+      isEntry: false,
+      imports: [],
+    };
+
     instance.renderChunk(code, chunk, outputOptions);
 
     expect(esformatter.format).toHaveBeenCalledWith(code, undefined);
@@ -208,8 +247,12 @@ describe('rollup-plugin', () => {
 
     const instance = rollupPlugin(options);
     const code = 'var foo = 0;';
-    const chunk = {isEntry: false, imports: []};
     const outputOptions = {};
+    const chunk = {
+      isEntry: false,
+      imports: [],
+    };
+
     instance.renderChunk(code, chunk, outputOptions);
 
     expect(esformatter.format).toHaveBeenCalledWith(code, {
