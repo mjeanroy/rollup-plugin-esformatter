@@ -43,9 +43,11 @@ module.exports = function lint() {
   const loadFormatter = eslint.loadFormatter('stylish');
 
   return Promise.all([lintFiles, loadFormatter]).then(([results, formatter]) => {
-    if (results.errorCount > 0 || results.warningCount > 0) {
-      fancyLog(formatter.format(results));
-      throw new Error('ESLintError');
+    for (const lintResult of results) {
+      if (lintResult.errorCount > 0 || lintResult.fatalErrorCount > 0 || lintResult.warningCount > 0) {
+        fancyLog(formatter.format(results));
+        throw new Error('ESLintError');
+      }
     }
   });
 };
