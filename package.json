@@ -39,7 +39,7 @@
     "magic-string": "0.30.17"
   },
   "devDependencies": {
-    "@babel/core": "7.27.4",
+    "@babel/core": "7.27.7",
     "@babel/preset-env": "7.27.2",
     "@babel/register": "7.27.1",
     "@rollup/plugin-babel": "6.0.4",
