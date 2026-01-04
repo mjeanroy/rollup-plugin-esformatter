@@ -26,7 +26,6 @@ import fs from 'fs';
 import path from 'path';
 import * as rollup from 'rollup';
 import tmp from 'tmp';
-import Q from 'q';
 import { verifyWarnLogsBecauseOfSourcemap } from '../utils/verify-warn-logs-because-of-source-map';
 import { joinLines } from '../utils/join-lines';
 import esformatter from '../../src/index';
@@ -138,7 +137,7 @@ describe('rollup-plugin-esformatter', () => {
 
     rollup.rollup(config)
       .then((bundle) => (
-        Q.all(config.output.map((out) => bundle.write(out)))
+        Promise.all(config.output.map((out) => bundle.write(out)))
       ))
       .then(() => {
         fs.readFile(output, 'utf8', (err, data) => {
