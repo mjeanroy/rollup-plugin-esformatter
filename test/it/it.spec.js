@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-import fs from 'fs';
+import fs from 'fs/promises';
 import path from 'path';
 import * as rollup from 'rollup';
 import tmp from 'tmp';
@@ -47,7 +47,7 @@ describe('rollup-plugin-esformatter', () => {
     tmpDir.removeCallback();
   });
 
-  it('should run esformatter on final bundle', (done) => {
+  it('should run esformatter on final bundle', async () => {
     const output = path.join(tmpDir.name, 'bundle.js');
     const config = {
       input: path.join(__dirname, 'fixtures', 'bundle.js'),
@@ -61,31 +61,24 @@ describe('rollup-plugin-esformatter', () => {
       ],
     };
 
-    rollup.rollup(config)
-      .then((bundle) => bundle.write(config.output))
-      .then(() => {
-        fs.readFile(output, 'utf8', (err, data) => {
-          if (err) {
-            done.fail(err);
-          }
+    const bundle = await rollup.rollup(config);
 
-          const content = data.toString();
+    await bundle.write(config.output);
 
-          expect(content).toBeDefined();
-          expect(content).toContain(
-            joinLines([
-              'function sum(array) {',
-              '  return array.reduce((acc, x) => acc + x, 0)',
-              '}',
-            ]),
-          );
+    const data = await fs.readFile(output, 'utf8');
+    const content = data.toString();
 
-          done();
-        });
-      });
+    expect(content).toBeDefined();
+    expect(content).toContain(
+      joinLines([
+        'function sum(array) {',
+        '  return array.reduce((acc, x) => acc + x, 0)',
+        '}',
+      ]),
+    );
   });
 
-  it('should run esformatter on final bundle with sourcemap set in output option', (done) => {
+  it('should run esformatter on final bundle with sourcemap set in output option', async () => {
     const output = path.join(tmpDir.name, 'bundle.js');
     const config = {
       input: path.join(__dirname, 'fixtures', 'bundle.js'),
@@ -101,27 +94,17 @@ describe('rollup-plugin-esformatter', () => {
       ],
     };
 
-    rollup.rollup(config)
-      .then((bundle) => bundle.write(config.output))
-      .then(() => {
-        fs.readFile(output, 'utf8', (err, data) => {
-          if (err) {
-            done.fail(err);
-            return;
-          }
+    const bundle = await rollup.rollup(config);
 
-          const content = data.toString();
-          expect(content).toContain('//# sourceMappingURL');
-          verifyWarnLogsBecauseOfSourcemap();
-          done();
-        });
-      })
-      .catch((err) => {
-        done.fail(err);
-      });
+    await bundle.write(config.output);
+
+    const data = await fs.readFile(output, 'utf8');
+    const content = data.toString();
+    expect(content).toContain('//# sourceMappingURL');
+    verifyWarnLogsBecauseOfSourcemap();
   });
 
-  it('should run esformatter on final bundle with sourcemap set in output array option', (done) => {
+  it('should run esformatter on final bundle with sourcemap set in output array option', async () => {
     const output = path.join(tmpDir.name, 'bundle.js');
     const config = {
       input: path.join(__dirname, 'fixtures', 'bundle.js'),
@@ -135,29 +118,19 @@ describe('rollup-plugin-esformatter', () => {
       ],
     };
 
-    rollup.rollup(config)
-      .then((bundle) => (
-        Promise.all(config.output.map((out) => bundle.write(out)))
-      ))
-      .then(() => {
-        fs.readFile(output, 'utf8', (err, data) => {
-          if (err) {
-            done.fail(err);
-            return;
-          }
+    const bundle = await rollup.rollup(config);
 
-          const content = data.toString();
-          expect(content).toContain('//# sourceMappingURL');
-          verifyWarnLogsBecauseOfSourcemap();
-          done();
-        });
-      })
-      .catch((err) => {
-        done.fail(err);
-      });
+    await Promise.all(
+      config.output.map((out) => bundle.write(out)),
+    );
+
+    const data = await fs.readFile(output, 'utf8');
+    const content = data.toString();
+    expect(content).toContain('//# sourceMappingURL');
+    verifyWarnLogsBecauseOfSourcemap();
   });
 
-  it('should enable sourcemap on plugin', (done) => {
+  it('should enable sourcemap on plugin', async () => {
     const output = path.join(tmpDir.name, 'bundle.js');
     const config = {
       input: path.join(__dirname, 'fixtures', 'bundle.js'),
@@ -175,21 +148,10 @@ describe('rollup-plugin-esformatter', () => {
       ],
     };
 
-    rollup.rollup(config)
-      .then((bundle) => bundle.write(config.output))
-      .then(() => {
-        fs.readFile(output, 'utf8', (err) => {
-          if (err) {
-            done.fail(err);
-            return;
-          }
+    const bundle = await rollup.rollup(config);
 
-          verifyWarnLogsBecauseOfSourcemap();
-          done();
-        });
-      })
-      .catch((err) => {
-        done.fail(err);
-      });
+    await bundle.write(config.output);
+    await fs.readFile(output, 'utf8');
+    verifyWarnLogsBecauseOfSourcemap();
   });
 });
