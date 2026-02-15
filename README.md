@@ -21,7 +21,7 @@ This plugin follow rollup versioning:
 
 Then add it to your rollup configuration:
 
-const path = require('path');
+const path = require('node:path');
 const esformatter = require('rollup-plugin-esformatter');
 
 ```javascript
@@ -52,7 +52,7 @@ Note that this may take some time since `esformatter` package is not able to gen
 Here is an example:
 
 ```javascript
-const path = require('path');
+const path = require('node:path');
 const esformatter = require('rollup-plugin-esformatter');
 
 module.exports = {

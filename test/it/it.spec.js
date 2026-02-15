@@ -22,8 +22,8 @@
  * SOFTWARE.
  */
 
-import fs from 'fs/promises';
-import path from 'path';
+import fs from 'node:fs/promises';
+import path from 'node:path';
 import * as rollup from 'rollup';
 import tmp from 'tmp';
 import { verifyWarnLogsBecauseOfSourcemap } from '../utils/verify-warn-logs-because-of-source-map';
