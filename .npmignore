@@ -41,6 +41,8 @@ node_modules/
 /.travis.yml
 /gulpfile.js
 /*.tar.gz
+/pnpm-workspace.yaml
+/pnpm-lock.yaml
 
 #OS
 .DS_Store
