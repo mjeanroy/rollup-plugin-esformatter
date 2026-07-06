@@ -31,7 +31,9 @@ function loadJasmine() {
   const runner = new Jasmine();
 
   runner.loadConfig({
-    failSpecWithNoExpectations: true,
+    env: {
+      failSpecWithNoExpectations: true,
+    },
     jsLoader: 'require',
     spec_dir: path.basename(config.test),
     spec_files: [
