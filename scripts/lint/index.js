@@ -27,6 +27,7 @@ const config = require('../config');
 
 module.exports = function lint() {
   const inputs = [
+    path.join(config.root, 'eslint.config.cjs'),
     path.join(config.root, '*.js'),
     path.join(config.src, '**', '*.js'),
     path.join(config.test, '**', '*.js'),
