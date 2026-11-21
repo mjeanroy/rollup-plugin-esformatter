@@ -37,13 +37,15 @@ require('@babel/register')({
   ],
 });
 
-const prebuild = gulp.series(clean, lint);
+// Chained tasks (build, test, release) always lint the whole project: `--file` only restricts
+// the standalone `lint` task.
+const prebuild = gulp.series(clean, lint.lint);
 const pretest = gulp.series(prebuild, build);
 const prerelease = gulp.series(pretest, test.test);
 
 module.exports = {
   'clean': clean,
-  'lint': lint,
+  'lint': lint.lintCli,
   'build': gulp.series(prebuild, build),
   'tdd': test.tdd,
   'test': gulp.series(pretest, test.test),
