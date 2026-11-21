@@ -1,6 +1,6 @@
 # rollup-plugin-esformatter
 
-Rollup plugin that can be used to run [esformatter](http://npmjs.com/package/esformatter) on the final bundle.
+Rollup plugin that can be used to run [esformatter](https://www.npmjs.com/package/esformatter) on the final bundle.
 
 ## How to use
 
@@ -8,18 +8,19 @@ Install the plugin with NPM:
 
 `npm install --save-dev rollup-plugin-esformatter`
 
-This plugin follow rollup versioning:
+Compatibility:
 
-- Use `rollup-plugin-formatter@0.x.x` with `rollup@0.x.x`
-- Use `rollup-plugin-formatter@1.x.x` with `rollup@1.x.x`
-- Use `rollup-plugin-formatter@2.x.x` with `rollup@2.x.x`
+- Use `rollup-plugin-esformatter@3.x.x` with `rollup@1.x.x` up to `rollup@4.x.x` (requires node >= 14)
+- Use `rollup-plugin-esformatter@2.x.x` with `rollup@1.x.x` or `rollup@2.x.x`
+- Use `rollup-plugin-esformatter@1.x.x` with `rollup@1.x.x`
+- Use `rollup-plugin-esformatter@0.x.x` with `rollup@0.x.x`
 
 Then add it to your rollup configuration:
 
+```javascript
 const path = require('node:path');
 const esformatter = require('rollup-plugin-esformatter');
 
-```javascript
 module.exports = {
   input: path.join(__dirname, 'src', 'index.js'),
 
@@ -40,9 +41,9 @@ module.exports = {
 
 ## Source Maps
 
-If source map is enabled in the global rollup options, then a source map will be generated on the formatted bundle (except if sourcemap are explicitely disabled in the esformatter plugin options).
+If source maps are enabled in the rollup output options (`output.sourcemap`), a source map is generated for the formatted bundle.
 
-Note that this may take some time since `esformatter` package is not able to generate a sourcemap and this plugin must compute the diff between the original bundle and the formatted result and generate the corresponding sourcemap: for this reason, sourcemap are disabled by default.
+Note that this may take some time: `esformatter` cannot generate source maps, so this plugin computes the diff between the original bundle and the formatted result and builds the source map from it. A warning is printed when this happens. For this reason, source maps are disabled by default.
 
 Here is an example:
 
@@ -54,15 +55,12 @@ module.exports = {
   input: path.join(__dirname, 'src', 'index.js'),
 
   output: {
-    path.join(__dirname, 'dist', 'bundle.js'),
+    file: path.join(__dirname, 'dist', 'bundle.js'),
     sourcemap: true,
   },
 
   plugins: [
-    // Run plugin with esformatter options.
-    esformatter({
-      sourcemap: true, // Can also be disabled/enabled here.
-    }),
+    esformatter(),
   ],
 };
 ```
