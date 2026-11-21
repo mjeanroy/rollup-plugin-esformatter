@@ -47,6 +47,7 @@ module.exports = {
   'build': gulp.series(prebuild, build),
   'tdd': test.tdd,
   'test': gulp.series(pretest, test.test),
+  'test:unit': test.test,
   'release:patch': gulp.series(prerelease, release.patch),
   'release:minor': gulp.series(prerelease, release.minor),
   'release:major': gulp.series(prerelease, release.major),
