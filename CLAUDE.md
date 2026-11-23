@@ -72,6 +72,7 @@ These are set in `eslint.config.cjs`, on top of airbnb-base:
 - pnpm 12 reports settings in `pnpm-workspace.yaml` that it does not recognize. It only warns here because `package.json` does not pin a pnpm version; with a pin it fails with `ERR_PNPM_UNRECOGNIZED_WORKSPACE_SETTINGS`. Check key spelling there.
 - pnpm (since 11) fails `pnpm install` when a dependency has a build script that is neither allowed nor denied. List each such dependency under `allowBuilds` in `pnpm-workspace.yaml` (`core-js` is currently denied).
 - Do not bump `magic-string` to a new major. Recent majors are ESM-only and need Node >= 22, while rollup still supports Node 18. Dependabot ignores those majors for the same reason.
+- Do not bump `@babel/*` to 8.x yet. Babel 8 is ESM-only and needs Node >= 22.18, which breaks the Node 18 CI jobs, and `@rollup/plugin-babel` still declares `@babel/core ^7`. Dependabot ignores `@babel/*` majors for the same reason. Upgrading later also requires `require('@babel/register').default(...)` in `gulpfile.js`.
 - Dependabot groups `@babel/*` updates together, and `jasmine` with `jasmine-core`.
 
 ## Conventions

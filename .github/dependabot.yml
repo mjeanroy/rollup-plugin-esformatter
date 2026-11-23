@@ -46,6 +46,10 @@ updates:
     # Since rollup still supports node 18, ignore major until rollup@5 is released.
     - dependency-name: magic-string
       update-types: ["version-update:semver-major"]
+    # babel@8 is esm-only and requires node >= 22.18, and @rollup/plugin-babel only supports @babel/core@^7.
+    # Ignore major until node < 22 support is dropped (likely with rollup@5) and @rollup/plugin-babel supports babel 8.
+    - dependency-name: "@babel/*"
+      update-types: ["version-update:semver-major"]
     # eslint@^9.0.0 requires a rewrite of the config to a new format.
     # Did not have time to upgrade yet.
     - dependency-name: eslint
