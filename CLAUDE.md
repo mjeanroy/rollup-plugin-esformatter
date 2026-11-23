@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project
 
-A Rollup plugin (`rollup-plugin-esformatter`) that runs [esformatter](https://npmjs.com/package/esformatter) on the final bundle. It supports rollup 1.x through 4.x (peer dependency) and Node >= 14. The package manager is pnpm 11 (CI pins 11.28.12 through `pnpm/setup`; pnpm 11 itself needs Node >= 22.13, but CI installs its standalone binary, so the Node 18–21 runners still work). pnpm settings live in `pnpm-workspace.yaml`: pnpm 11 only reads auth/registry settings from `.npmrc`, which is kept for npm (`npm version` in the release task). `.nvmrc` pins Node 20.
+A Rollup plugin (`rollup-plugin-esformatter`) that runs [esformatter](https://npmjs.com/package/esformatter) on the final bundle. It supports rollup 1.x through 4.x (peer dependency) and Node >= 14. The package manager is pnpm 12 (CI pins 12.22.0 through `pnpm/setup`; CI installs its standalone binary, so it does not depend on the runner's Node version). pnpm settings live in `pnpm-workspace.yaml`: since pnpm 11, pnpm only reads auth/registry settings from `.npmrc`, which is kept for npm (`npm version` in the release task). `.nvmrc` pins Node 20.
 
 CI (`.github/workflows/build.yml`) runs `pnpm install && pnpm test` on Node 18 through 26, on Linux, macOS and Windows. Code in `scripts/` and `test/` must handle Windows paths: use `path.join` and never hardcode `/`.
 
@@ -69,7 +69,8 @@ These are set in `eslint.config.cjs`, on top of airbnb-base:
 
 - Versions are pinned exactly (`saveExact: true` in `pnpm-workspace.yaml`, `save-exact=true` in `.npmrc` for npm), except the `esformatter` range.
 - `pnpm-workspace.yaml` sets `minimumReleaseAge: 2880`, so packages published less than 2 days ago will not install. It also sets `blockExoticSubdeps` and `trustPolicy: no-downgrade`.
-- pnpm 11 fails `pnpm install` when a dependency has a build script that is neither allowed nor denied. List each such dependency under `allowBuilds` in `pnpm-workspace.yaml` (`core-js` is currently denied).
+- pnpm 12 reports settings in `pnpm-workspace.yaml` that it does not recognize. It only warns here because `package.json` does not pin a pnpm version; with a pin it fails with `ERR_PNPM_UNRECOGNIZED_WORKSPACE_SETTINGS`. Check key spelling there.
+- pnpm (since 11) fails `pnpm install` when a dependency has a build script that is neither allowed nor denied. List each such dependency under `allowBuilds` in `pnpm-workspace.yaml` (`core-js` is currently denied).
 - Do not bump `magic-string` to a new major. Recent majors are ESM-only and need Node >= 22, while rollup still supports Node 18. Dependabot ignores those majors for the same reason.
 - Dependabot groups `@babel/*` updates together, and `jasmine` with `jasmine-core`.
 
