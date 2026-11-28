@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project
 
-A Rollup plugin (`rollup-plugin-esformatter`) that runs [esformatter](https://npmjs.com/package/esformatter) on the final bundle. It supports rollup 1.x through 4.x (peer dependency) and Node >= 14. The package manager is pnpm 12 (CI pins 12.22.0 through `pnpm/setup`; CI installs its standalone binary, so it does not depend on the runner's Node version). pnpm settings live in `pnpm-workspace.yaml`: since pnpm 11, pnpm only reads auth/registry settings from `.npmrc`, which is kept for npm (`npm version` in the release task). `.nvmrc` pins Node 20.
+A Rollup plugin (`rollup-plugin-esformatter`) that runs [esformatter](https://npmjs.com/package/esformatter) on the final bundle. It supports rollup 1.x through 4.x (peer dependency) and Node >= 14. The package manager is pnpm 12 (CI pins 12.23.0 through `pnpm/setup`; CI installs its standalone binary, so it does not depend on the runner's Node version). pnpm settings live in `pnpm-workspace.yaml`: since pnpm 11, pnpm only reads auth/registry settings from `.npmrc`, which is kept for npm (`npm version` in the release task). `.nvmrc` pins Node 20.
 
 CI (`.github/workflows/build.yml`) runs `pnpm install && pnpm test` on Node 18 through 26, on Linux, macOS and Windows. Code in `scripts/` and `test/` must handle Windows paths: use `path.join` and never hardcode `/`.
 
