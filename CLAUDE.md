@@ -30,7 +30,7 @@ pnpm run test:unit --file test/rollup-plugin.spec.js --filter "should have a nam
 pnpm run test:unit --filter sourcemap                                            # filter across all specs
 ```
 
-Both `--file` and `--filter` are parsed by `scripts/cli/index.js`, which the lint and test tasks share. Use this instead of calling `npx jasmine` directly. The specs need `@babel/register` and Jasmine's `require` loader, and the gulp task sets both up. The test runner sets `failSpecWithNoExpectations: true`, so every spec needs at least one `expect`.
+Both `--file` and `--filter` are parsed by `scripts/cli/index.js`, which the lint and test tasks share. Use this instead of calling `npx jasmine` directly. The specs need `@babel/register` and a `require`-based Jasmine loader (`scripts/test/require-loader.js`: since jasmine 7, specs are otherwise loaded with `import()`, which bypasses babel), and the gulp task sets both up. The test runner sets `failSpecWithNoExpectations: true`, so every spec needs at least one `expect`.
 
 ## Architecture
 

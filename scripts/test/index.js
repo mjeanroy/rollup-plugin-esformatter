@@ -28,16 +28,16 @@ const Jasmine = require('jasmine');
 const config = require('../config');
 const { readCliOptions } = require('../cli');
 
-function loadJasmine({ files = [], filter } = {}) {
+async function runJasmine({ files = [], filter } = {}) {
   const runner = new Jasmine({
     projectBaseDir: config.root,
   });
 
-  runner.loadConfig({
+  await runner.loadConfig({
     env: {
       failSpecWithNoExpectations: true,
     },
-    jsLoader: 'require',
+    loader: path.join(__dirname, 'require-loader.js'),
     spec_dir: path.basename(config.test),
     spec_files: [
       '**/*-spec.js',
@@ -46,7 +46,7 @@ function loadJasmine({ files = [], filter } = {}) {
   });
 
   runner.exitOnCompletion = false;
-  return () => runner.execute(files, filter);
+  return runner.execute(files, filter);
 }
 
 function deleteRequireCache() {
@@ -61,7 +61,7 @@ function deleteRequireCache() {
  * @return {Promise} A promise resolved when the test suite succeeds, rejected otherwise.
  */
 function test() {
-  return loadJasmine(readCliOptions())().then((result) => {
+  return runJasmine(readCliOptions()).then((result) => {
     if (result.overallStatus !== 'passed') {
       throw new Error('JasmineError');
     }
@@ -86,7 +86,7 @@ function tdd(done) {
     // So, when it runs a second time, jasmine does not detect anything because the cache is
     // already bloated, and jasmine does not detect any changes, or load outdated files.
     deleteRequireCache();
-    return loadJasmine()();
+    return runJasmine();
   });
 
   done();
